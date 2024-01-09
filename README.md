@@ -1,5 +1,6 @@
 # Application de Gestion de Contacts avec Qt
-Bienvenue dans l'application de gestion de contacts développée avec Qt. Cette application permet la création et la recherche de contacts de manière conviviale et efficace.
+Bienvenue dans l'application de gestion de contacts développée avec Qt. 
+Cette application permet la création et la recherche de contacts de manière conviviale et efficace.
 
 ## Fonctionnalités
 
