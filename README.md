@@ -20,6 +20,9 @@ Si vous avez des idées d'améliorations, de nouvelles fonctionnalités, ou si v
 ## Auteurs
 
 @mehdidtr
+Guechi Justion
+Sicuraini Weber Maxime
+Brousse Clément
 
 ## Licence
 
