@@ -2,6 +2,8 @@
 
 internship::internship() {}
 
+
+
 std::string Internship::getSubject() const
 {
     return subject;
@@ -30,6 +32,26 @@ std::string Internship::getContactsInfo() const
 void Internship::setContactsInfo(const std::string &newContactsInfo)
 {
     contactsInfo = newContactsInfo;
+}
+
+Student *Internship::getIdStudents() const
+{
+    return idStudents;
+}
+
+void Internship::setIdStudents(Student *newIdStudents)
+{
+    idStudents = newIdStudents;
+}
+
+Mds *Internship::getIdMaster() const
+{
+    return idMaster;
+}
+
+void Internship::setIdMaster(Mds *newIdMaster)
+{
+    idMaster = newIdMaster;
 }
 
 int Internship::getIdInternship() const

@@ -2,9 +2,9 @@
 #define INTERNSHIP_H
 
 #include <stdlib.h>
-#include <iostream.h>
+#include <iostream>
 #include <string.h>
-class Students;
+class Student;
 class Mds;
 class Internship
 {
@@ -13,20 +13,23 @@ private :
     std::string subject;
     std::string timeframe;
     std::string contactsInfo;
+    Student* idStudents;
     Mds* idMaster;
-    Students* idStudents;
 public:
-    static int get_Internship( void );
-    void set_Internship(int idInternship);
-    static std::string get_Subject( void );
-    static std::string get_timeframe( void );
-    static std::string get_contactsInfo( void );
-    void set_subject(std::string subject);
-    void set_timeframe(std::string timeframe);
-    void set_contactsInfo(std::string contactsInfo);
     Internship();
+
     int getIdInternship() const;
     void setIdInternship(int newIdInternship);
+    std::string getSubject() const;
+    void setSubject(const std::string &newSubject);
+    std::string getTimeframe() const;
+    void setTimeframe(const std::string &newTimeframe);
+    std::string getContactsInfo() const;
+    void setContactsInfo(const std::string &newContactsInfo);
+    Student *getIdStudents() const;
+    void setIdStudents(Student *newIdStudents);
+    Mds *getIdMaster() const;
+    void setIdMaster(Mds *newIdMaster);
 };
 
 #endif // INTERNSHIP_H
