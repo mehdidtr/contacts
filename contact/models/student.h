@@ -5,7 +5,7 @@
 #include <stdlib.h>
 class internship;
 
-class student
+class Student
 {
 private:
     int idStudent;
@@ -16,7 +16,7 @@ private:
     internship* idInternship;
 
 public:
-    student();
+    Student();
     int getIdStudent() const;
     void setIdStudent(int newIdStudent);
 

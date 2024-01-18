@@ -1,6 +1,6 @@
 #include "internship.h"
 
-internship::internship() {}
+Internship::Internship() {}
 
 
 

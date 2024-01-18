@@ -4,7 +4,8 @@
 #include <iostream>
 #include <stdlib.h>
 #include <string>
-class company;
+#include "company.h"
+
 class Mds
 {
 private:
@@ -13,7 +14,7 @@ private:
     std::string email;
     std::string position;
     int id;
-    company *company_mds;
+    Company *company_mds;
 public:
     Mds(/* args */);
     ~Mds();
@@ -22,13 +23,13 @@ public:
     void set_email(std::string email);
     void set_position(std::string position);
     void set_id(int id);
-    void set_company(company *company);
+    void set_company(Company *company);
     std::string get_name();
     std::string get_phone();
     std::string get_email();
     std::string get_position();
     int get_id();
-    company* get_company();
+    Company* get_company();
 };
 
 

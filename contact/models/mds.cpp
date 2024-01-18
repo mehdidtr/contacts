@@ -16,7 +16,7 @@ int Mds::get_id()
 {
     return id;
 }
-company* Mds::get_company()
+Company* Mds::get_company()
 {
     return company_mds;
 }
@@ -40,7 +40,7 @@ void Mds::set_id(int id)
 {
     this->id = id;
 }
-void Mds::set_company(company *company)
+void Mds::set_company(Company *company)
 {
     this->company_mds = company;
 }

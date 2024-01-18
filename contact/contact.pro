@@ -9,12 +9,18 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    company.cpp \
+    models/company.cpp \
+    models/internship.cpp \
+    models/mds.cpp \
+    models/student.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
-    company.h \
+    models/company.h \
+    models/internship.h \
+    models/mds.h \
+    models/student.h \
     mainwindow.h
 
 FORMS += \
