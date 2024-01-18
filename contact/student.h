@@ -24,10 +24,10 @@ public:
     std::string getNom( void );
     std::string getMail( void );
     std::string getPromotion( void );
-    void setPrenom(std::string prenom);
-    void setNom(std::string nom);
-    void setMail(std::string mail);
-    void setPromotion(std::string promotion);
+    void setPrenom(const std::string newPrenom);
+    void setNom(std::string newNom);
+    void setMail(std::string newMail);
+    void setPromotion(std::string newPromotion);
 };
 
 #endif // STUDENT_H
