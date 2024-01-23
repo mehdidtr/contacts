@@ -9,7 +9,7 @@ dataController::~dataController()
 //Permet de parse les données du fichier csv et de les stocker dans un vecteur de la classe MDS avec QT
 template<> std::vector<Mds> dataController::getData(){
     std::vector <Mds> listMds = std::vector<Mds>();
-    QFile file ("../../ressources/MDS.csv");
+    QFile file ("ressources/MDS.csv");
     if (!file.open(QIODevice::ReadOnly)) {
         std::cout << "Erreur lors de l'ouverture du fichier" << std::endl;
         return listMds;
@@ -27,9 +27,8 @@ template<> std::vector<Mds> dataController::getData(){
 }
 
 template<> std::vector<Company> dataController::getData(){
-
     std::vector <Company> listCompany = std::vector<Company>();
-    QFile file("../../ressources/Entreprise.csv");
+    QFile file("ressources/Entreprise.csv");
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         std::cout << "Erreur lors de l'ouverture du fichier" << std::endl;
@@ -46,9 +45,9 @@ template<> std::vector<Company> dataController::getData(){
     file.close();
     return listCompany;
 }
-
+//Permet d'ajouter les données dans le fichier csv avec QT
 template<> void dataController::setData(std::vector<Mds> list){
-    QFile file("../../ressources/MDS.csv");
+    QFile file("ressources/MDS.csv");
     if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
         std::cout << "Erreur lors de l'ouverture du fichier" << std::endl;
 
@@ -60,7 +59,7 @@ template<> void dataController::setData(std::vector<Mds> list){
 }
 
 template<> void dataController::setData(std::vector<Company> list){
-    QFile file("../../ressources/Company.csv");
+    QFile file("ressources/Company.csv");
     if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
         std::cout << "Erreur lors de l'ouverture du fichier" << std::endl;
 
