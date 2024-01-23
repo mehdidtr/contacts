@@ -1,14 +1,12 @@
 #if !defined(DATACONTROLLER)
 #define DATACONTROLLER
 
-#include <QFile>
-#include <QTextStream>
-#include <QDir>
-
 #include <iostream>
 #include <string>
 #include <vector>
-
+#include <QFile>
+#include <QTextStream>
+#include <QDir>
 #include "../models/company.h"
 #include "../models/student.h"
 #include "../models/mds.h"

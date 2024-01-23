@@ -10,21 +10,25 @@ class Mds
 {
 private:
     std::string name;
+    std::string firstname;
     std::string phone;
     std::string email;
     std::string position;
     int id;
     Company *company_mds;
 public:
-    Mds(/* args */);
+    Mds();
+    Mds(int id, std::string name, std::string firstname, std::string email, std::string phone, std::string position);
     ~Mds();
     void set_name(std::string name);
+    void set_firstname(std::string firstname);
     void set_phone(std::string phone);
     void set_email(std::string email);
     void set_position(std::string position);
     void set_id(int id);
     void set_company(Company *company);
     std::string get_name();
+    std::string get_firstname();
     std::string get_phone();
     std::string get_email();
     std::string get_position();
