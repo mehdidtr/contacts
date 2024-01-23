@@ -13,8 +13,8 @@ SOURCES += \
     src/models/internship.cpp \
     src/models/mds.cpp \
     src/models/student.cpp \
-    src/main.cpp \
-    src/mainwindow.cpp \
+    main.cpp \
+    mainwindow.cpp \
     src/controller/dataController.cpp \
 
 HEADERS += \
@@ -22,7 +22,7 @@ HEADERS += \
     src/models/internship.h \
     src/models/mds.h \
     src/models/student.h \
-    src/mainwindow.h \
+    mainwindow.h \
     src/controller/dataController.h \
 
 FORMS += \
