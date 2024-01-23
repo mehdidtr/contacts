@@ -6,9 +6,9 @@
 
 class Company{
     private:
-        int ID_Entreprise;
-        std::string Nom;
-        std::string Domaine;
+        int id;
+        std::string nom;
+        std::string domaine;
 
     public:
         //CONSTRUCTEUR
@@ -16,12 +16,12 @@ class Company{
         Company(int id, std::string nom, std::string domaine);
 
         // Getters
-        int getID_Entreprise();
+        int getId();
         std::string getNom();
         std::string getDomaine();
 
         // Setters
-        void setID_Entreprise(int id);
+        void setId(int id);
         void setNom(std::string nom);
         void setDomaine(std::string domaine);
 };

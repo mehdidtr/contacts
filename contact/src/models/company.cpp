@@ -1,32 +1,34 @@
 #include "company.h"
 
 //Constructeur
-Company::Company(int id, std::string nom, std::string domaine) : ID_Entreprise(id), Nom(nom), Domaine(domaine) {
-
+Company::Company(int id, std::string nom, std::string domaine) : id(id), nom(nom), domaine(domaine) {
+    this->id = id;
+    this->nom = nom;
+    this->domaine = domaine;
 }
 
 // Getters
-int Company::getID_Entreprise() {
-    return ID_Entreprise;
+int Company::getId() {
+    return id;
 }
 
 std::string Company::getNom() {
-    return Nom;
+    return nom;
 }
 
 std::string Company::getDomaine() {
-    return Domaine;
+    return domaine;
 }
 
 // Setters
-void Company::setID_Entreprise(int id) {
-    ID_Entreprise = id;
+void Company::setId(int id) {
+    this->id = id;
 }
 
 void Company::setNom(std::string nom) {
-    Nom = nom;
+    this->nom = nom;
 }
 
 void Company::setDomaine(std::string domaine) {
-    Domaine = domaine;
+    this->domaine = domaine;
 }
