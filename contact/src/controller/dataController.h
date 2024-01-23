@@ -20,6 +20,7 @@ public:
     dataController(/* args */);
     ~dataController();
     template <typename T> static std::vector<T> getData( );
+    template <typename T> static void setData(std::vector<T> list);
 };
 
 

@@ -31,8 +31,10 @@ template<> std::vector<Company> dataController::getData(){
     std::vector <Company> listCompany = std::vector<Company>();
     QFile file("../../ressources/Entreprise.csv");
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
         std::cout << "Erreur lors de l'ouverture du fichier" << std::endl;
         return listCompany;
+    }
 
     QTextStream in(&file);
     while (!in.atEnd()){
@@ -43,4 +45,16 @@ template<> std::vector<Company> dataController::getData(){
     }
     file.close();
     return listCompany;
+}
+
+template<> void dataController::setData(std::vector<Mds> list){
+    QFile file("../../ressources/MDS.csv");
+    if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        std::cout << "Erreur lors de l'ouverture du fichier" << std::endl;
+
+    QTextStream out(&file);
+    for (int i = 0; i < list.size(); i++){
+        out << list[i].get_id() << ";" << list[i].get_name().c_str() << ";" << list[i].get_firstname().c_str() << ";" << list[i].get_email().c_str() << ";" << list[i].get_phone().c_str() << ";" << list[i].get_position().c_str() << "\n";
+    }
+    file.close();
 }
