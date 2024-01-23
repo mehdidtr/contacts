@@ -58,3 +58,15 @@ template<> void dataController::setData(std::vector<Mds> list){
     }
     file.close();
 }
+
+template<> void dataController::setData(std::vector<Company> list){
+    QFile file("../../ressources/Company.csv");
+    if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        std::cout << "Erreur lors de l'ouverture du fichier" << std::endl;
+
+    QTextStream out(&file);
+    for (int i = 0; i < list.size(); i++){
+        out << list[i].getId() << ";" << list[i].getNom().c_str() << ";" << list[i].getDomaine().c_str() << "\n";
+    }
+    file.close();
+}
