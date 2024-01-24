@@ -69,3 +69,71 @@ template<> void dataController::setData(std::vector<Company> list){
     }
     file.close();
 }
+
+std::chrono::system_clock::time_point GFG(const std::string& datetimeString)
+{
+    std::string format = "%d-%m-%Y";
+    tm tmStruct = {};
+    std::istringstream ss(datetimeString);
+    ss >> std::get_time(&tmStruct, format.c_str());
+    return std::chrono::system_clock::from_time_t(mktime(&tmStruct));
+}
+
+string DateTime(const chrono::system_clock::time_point& timePoint)
+{
+    std::string format = "%d-%m-%Y";
+    time_t time
+        = chrono::system_clock::to_time_t(timePoint);
+    tm* timeinfo = localtime(&time);
+    char buffer[70];
+    strftime(buffer, sizeof(buffer), format.c_str(),
+             timeinfo);
+    return buffer;
+}
+
+template<> std::vector<Internship> dataController::getData(){
+    std::vector<Internship> internships;
+
+    QFile file("../ressources/Stage.csv");
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text)){
+        return internships;
+    }
+
+    QTextStream in(&file);
+    int lineCount = 0;  // Compteur de lignes
+    while(!in.atEnd()){
+        QString line = in.readLine();
+        if (lineCount > 0) {
+            QStringList liste = line.split(";");
+
+            if (liste.size() >= 4) {
+                Internship newInternship(liste[0].toInt(), liste[1].toStdString(), DateTime(liste[2].toStdString()), DateTime(liste[3].toStdString()));
+                internships.push_back(newInternship);
+            } else {
+                qDebug() << "Error: Insufficient data in CSV file.";
+            }
+        }
+
+        lineCount++;
+    }
+
+    file.close();
+    return internships;
+}
+
+template<> void dataController::setData(std::vector<Internship> list){
+    QFile file("ressources/Stage.csv");
+    if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        std::cout << "Erreur lors de l'ouverture du fichier" << std::endl;
+
+    std::chrono::system_clock::time_point dateBegin = CFG(list[2].c_str());
+    std::chrono::system_clock::time_point dateEnd = CFG(list[3].c_str());
+    list[2] = dateBegin;
+    list[3] = dateEnd;
+
+    QTextStream out(&file);
+    out << list[0].getIdInternship() << ";" << list[1].getSubject().c_str() << ";" << list[2].getTimeBegin().c_str() << ";" << list[3].getTimeEnd().c_str() << "\n";
+
+
+    file.close();
+}
