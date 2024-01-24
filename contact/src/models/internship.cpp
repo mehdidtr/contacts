@@ -1,6 +1,31 @@
 #include "internship.h"
 
-Internship::Internship() {}
+std::string Internship::getTimeBegin() const
+{
+    return timeBegin;
+}
+
+void Internship::setTimeBegin(const std::string &newTimeBegin)
+{
+    timeBegin = newTimeBegin;
+}
+
+std::string Internship::getTimeEnd() const
+{
+    return timeEnd;
+}
+
+void Internship::setTimeEnd(const std::string &newTimeEnd)
+{
+    timeEnd = newTimeEnd;
+}
+
+Internship::Internship(int idInternship, std::string subject, std::string timeBegin , std::string timeEnd) {
+    this->idInternship = idInternship;
+    this->subject = subject;
+    this->timeBegin = timeBegin;
+    this->timeEnd = timeEnd;
+}
 
 
 
@@ -14,25 +39,6 @@ void Internship::setSubject(const std::string &newSubject)
     subject = newSubject;
 }
 
-std::string Internship::getTimeframe() const
-{
-    return timeframe;
-}
-
-void Internship::setTimeframe(const std::string &newTimeframe)
-{
-    timeframe = newTimeframe;
-}
-
-std::string Internship::getContactsInfo() const
-{
-    return contactsInfo;
-}
-
-void Internship::setContactsInfo(const std::string &newContactsInfo)
-{
-    contactsInfo = newContactsInfo;
-}
 
 Student *Internship::getIdStudents() const
 {

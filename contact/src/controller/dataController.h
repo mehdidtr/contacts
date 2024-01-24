@@ -2,8 +2,13 @@
 #define DATACONTROLLER
 
 #include <iostream>
+#include <stdlib.h>
 #include <string>
 #include <vector>
+#include <chrono>
+#include <ctime>
+#include <sstream>
+#include <iomanip>
 #include <QFile>
 #include <QTextStream>
 #include <QDir>
@@ -11,6 +16,7 @@
 #include "../models/student.h"
 #include "../models/mds.h"
 #include "../models/internship.h"
+
 
 class dataController
 {
@@ -23,6 +29,5 @@ public:
     template <typename T> static void setData(std::vector<T> list);
     void connectCompanyMds(std::vector<Company>* listCompany, std::vector<Mds>* listMds);
 };
-
 
 #endif // DATACONTROLLER

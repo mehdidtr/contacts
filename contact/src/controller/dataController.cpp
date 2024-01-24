@@ -95,6 +95,63 @@ template<> void dataController::setData(std::vector<Company> list){
     file.close();
 }
 
+template<> std::vector<Internship> dataController::getData(){
+    std::vector<Internship> internships;
+
+    QFile file("ressources/Stage.csv");
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text)){
+        return internships;
+    }
+
+    QTextStream in(&file);
+    while(!in.atEnd()){
+        QString line = in.readLine();
+        QStringList liste = line.split(";");
+        Internship newInternship(liste[0].toInt(), liste[1].toStdString(), liste[2].toStdString(), liste[3].toStdString());
+        internships.push_back(newInternship);
+    }
+
+    file.close();
+    return internships;
+}
+
+template<> void dataController::setData(std::vector<Internship> list){
+    QFile file("ressources/Stage.csv");
+    if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        std::cout << "Erreur lors de l'ouverture du fichier" << std::endl;
+
+    QTextStream out(&file);
+    for (int i = 0; i < list.size(); i++){
+        out << list[i].getIdInternship() << ";" << list[i].getSubject().c_str() << ";" << list[i].getTimeBegin().c_str() << ";" << list[i].getTimeEnd().c_str() << "\n";
+    }
+    // std::chrono::system_clock::time_point dateBegin = CFG(list[2].getTimeBegin());
+    // std::chrono::system_clock::time_point dateEnd = CFG(list[3].getTimeEnd());
+    // list[2].setTimeBegin(dateBegin);
+    // list[3] = dateEnd;
+
+    
+    file.close();
+}
+
+// std::chrono::system_clock::time_point GFG(std::string& datetimeString)
+// {
+//     std::string format = "%d-%m-%Y";
+//     tm tmStruct = {};
+//     std::istringstream ss(datetimeString);
+//     ss >> std::get_time(&tmStruct, format.c_str());
+//     return std::chrono::system_clock::from_time_t(mktime(&tmStruct));
+// }
+
+// std::string dataController::DateTime(std::chrono::system_clock::time_point& timePoint)
+// {
+//     std::string format = "%d-%m-%Y";
+//     time_t time = std::chrono::system_clock::to_time_t(timePoint);
+//     tm* timeinfo = localtime(&time);
+//     char buffer[70];
+//     strftime(buffer, sizeof(buffer), format.c_str(), timeinfo);
+//     return buffer;
+// }
+
 template<> void dataController::setData(std::vector<Student> list){
     QFile file("ressources/Etudiants.csv");
     if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
