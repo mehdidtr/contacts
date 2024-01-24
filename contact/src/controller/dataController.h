@@ -21,6 +21,7 @@ public:
     ~dataController();
     template <typename T> static std::vector<T> getData( );
     template <typename T> static void setData(std::vector<T> list);
+    void connectCompanyMds(std::vector<Company>* listCompany, std::vector<Mds>* listMds);
 };
 
 
