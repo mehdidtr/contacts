@@ -5,6 +5,10 @@
 #include <stdlib.h>
 #include <string>
 #include <vector>
+#include <chrono>
+#include <ctime>
+#include <sstream>
+#include <iomanip>
 #include <QFile>
 #include <QTextStream>
 #include <QDir>
@@ -18,8 +22,8 @@
         public:
             dataController();
             ~dataController();
-            std::string DateTime(const std::chrono::system_clock::time_point& timePoint);
-            std::chrono::system_clock::time_point GFG(const std::string& datetimeString);
+            std::string static DateTime(std::chrono::system_clock::time_point& timePoint);
+            std::chrono::system_clock::time_point static GFG(std::string& datetimeString);
             template <typename T> static std::vector<T> getData( );
             template <typename T> static void setData(std::vector<T> list);
     };
