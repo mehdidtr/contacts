@@ -16,6 +16,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     src/controller/dataController.cpp \
+    src/view/mainview.cpp \
 
 HEADERS += \
     src/models/company.h \
@@ -24,6 +25,7 @@ HEADERS += \
     src/models/student.h \
     mainwindow.h \
     src/controller/dataController.h \
+    src/view/mainview.h \
 
 FORMS += \
     mainwindow.ui
