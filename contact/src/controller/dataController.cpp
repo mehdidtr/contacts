@@ -79,11 +79,11 @@ std::chrono::system_clock::time_point GFG(const std::string& datetimeString)
     return std::chrono::system_clock::from_time_t(mktime(&tmStruct));
 }
 
-string DateTime(const chrono::system_clock::time_point& timePoint)
+std::string DateTime(const std::chrono::system_clock::time_point& timePoint)
 {
     std::string format = "%d-%m-%Y";
     time_t time
-        = chrono::system_clock::to_time_t(timePoint);
+        = std::chrono::system_clock::to_time_t(timePoint);
     tm* timeinfo = localtime(&time);
     char buffer[70];
     strftime(buffer, sizeof(buffer), format.c_str(),
@@ -94,7 +94,7 @@ string DateTime(const chrono::system_clock::time_point& timePoint)
 template<> std::vector<Internship> dataController::getData(){
     std::vector<Internship> internships;
 
-    QFile file("../ressources/Stage.csv");
+    QFile file("ressources/Stage.csv");
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)){
         return internships;
     }
