@@ -17,15 +17,17 @@
 #include "../models/mds.h"
 #include "../models/internship.h"
 
-    class dataController
-    {
-        public:
-            dataController();
-            ~dataController();
-            std::string static DateTime(std::chrono::system_clock::time_point& timePoint);
-            std::chrono::system_clock::time_point static GFG(std::string& datetimeString);
-            template <typename T> static std::vector<T> getData( );
-            template <typename T> static void setData(std::vector<T> list);
-    };
+
+class dataController
+{
+private:
+    /* data */
+public:
+    dataController(/* args */);
+    ~dataController();
+    template <typename T> static std::vector<T> getData( );
+    template <typename T> static void setData(std::vector<T> list);
+    void connectCompanyMds(std::vector<Company>* listCompany, std::vector<Mds>* listMds);
+};
 
 #endif // DATACONTROLLER

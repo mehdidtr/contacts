@@ -17,13 +17,17 @@ private:
 
 public:
     Student();
-    int getIdStudent() const;
-    void setIdStudent(int newIdStudent);
+    Student(int idStudent, std::string nom, std::string prenom, std::string mail, std::string promotion);
 
+    //GETTER
+    int getIdStudent() const;
     std::string getPrenom( void );
     std::string getNom( void );
     std::string getMail( void );
     std::string getPromotion( void );
+
+    //SETTER
+    void setIdStudent(int newIdStudent);
     void setPrenom(const std::string newPrenom);
     void setNom(std::string newNom);
     void setMail(std::string newMail);

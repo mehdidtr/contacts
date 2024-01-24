@@ -43,6 +43,7 @@ Makefile
 *.c915a3a
 *.user
 *.d153f59
+
 build-contact-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/debug/moc_mainwindow.cpp
 build-contact-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/debug/moc_predefs.h
 build-contact-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/ui_mainwindow.h
@@ -52,3 +53,7 @@ build-contact-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/.qtc_clangd/compile_commands.j
 .vscode/c_cpp_properties.json
 contact/.qtc_clangd/compile_commands.json
 contact/contact.pro.user
+contact/Usersmine2AppDataLocalTemptmp2c9btnox
+contact/Usersmine2AppDataLocalTemptmp9y47dzkc
+contact/Usersmine2AppDataLocalTemptmpr4x22o3a
+contact/Usersmine2AppDataLocalTemptmpxk8f3ygm
