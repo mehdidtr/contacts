@@ -49,3 +49,6 @@ build-contact-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/ui_mainwindow.h
 *.idx
 build-contact-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/.qtc_clangd/compile_commands.json
 .vscode/settings.json
+.vscode/c_cpp_properties.json
+contact/.qtc_clangd/compile_commands.json
+contact/contact.pro.user
