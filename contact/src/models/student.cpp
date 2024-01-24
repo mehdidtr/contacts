@@ -2,6 +2,15 @@
 
 Student::Student(){}
 
+Student::Student(int idStudent, std::string nom, std::string prenom, std::string mail, std::string promotion)
+{
+    this->idStudent = idStudent;
+    this->nom = nom;
+    this->prenom = prenom;
+    this->mail = mail;
+    this->promotion = promotion;
+}
+
 int Student::getIdStudent() const
 {
     return idStudent;

@@ -49,6 +49,27 @@ template<> std::vector<Company> dataController::getData(){
     file.close();
     return listCompany;
 }
+
+template<> std::vector<Student> dataController::getData(){
+    std::vector <Student> listStudent = std::vector<Student>();
+    QFile file("ressources/Etudiants.csv");
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        std::cout << "Erreur lors de l'ouverture du fichier" << std::endl;
+        return listStudent;
+    }
+
+    QTextStream in(&file);
+    while (!in.atEnd()){
+        QString line = in.readLine();
+        QStringList liste = line.split(";");
+        Student student = Student(liste[0].toInt(), liste[1].toStdString(), liste[2].toStdString(), liste[3].toStdString(), liste[4].toStdString());
+        listStudent.push_back(student);
+    }
+    file.close();
+    return listStudent;
+}
+
 //Permet d'ajouter les données dans le fichier csv avec QT
 template<> void dataController::setData(std::vector<Mds> list){
     QFile file("ressources/MDS.csv");
@@ -63,13 +84,25 @@ template<> void dataController::setData(std::vector<Mds> list){
 }
 
 template<> void dataController::setData(std::vector<Company> list){
-    QFile file("ressources/Company.csv");
+    QFile file("ressources/Entreprise.csv");
     if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
         std::cout << "Erreur lors de l'ouverture du fichier" << std::endl;
 
     QTextStream out(&file);
     for (int i = 0; i < list.size(); i++){
         out << list[i].getId() << ";" << list[i].getNom().c_str() << ";" << list[i].getDomaine().c_str() << "\n";
+    }
+    file.close();
+}
+
+template<> void dataController::setData(std::vector<Student> list){
+    QFile file("ressources/Etudiants.csv");
+    if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        std::cout << "Erreur lors de l'ouverture du fichier" << std::endl;
+
+    QTextStream out(&file);
+    for (int i = 0; i < list.size(); i++){
+        out << list[i].getIdStudent() << ";" << list[i].getNom().c_str() << ";" << list[i].getPrenom().c_str() << ";" << list[i].getMail().c_str() << ";" << list[i].getPromotion().c_str() << "\n";
     }
     file.close();
 }
@@ -81,4 +114,3 @@ void dataController::connectCompanyMds(std::vector<Company>* listCompany, std::v
             }
         }
     }
-}
