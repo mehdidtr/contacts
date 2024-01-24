@@ -20,8 +20,11 @@ template<> std::vector<Mds> dataController::getData(){
     {
         QString line = in.readLine();
         QStringList fields = line.split(";");
-        Mds mds = Mds(fields[0].toInt(),fields[1].toStdString(),fields[2].toStdString(),fields[4].toStdString(),fields[5].toStdString(),fields[6].toStdString(),fields[3].toInt());
-        listMds.push_back(mds);
+        if (fields.size() >= 7) {
+            std::cout << fields[3].toInt() << std::endl;
+            Mds mds = Mds(fields[0].toInt(),fields[1].toStdString(),fields[2].toStdString(),fields[4].toStdString(),fields[5].toStdString(),fields[6].toStdString(),fields[3].toInt());
+            listMds.push_back(mds);
+        }
     }
     file.close();
     return listMds;
@@ -54,7 +57,7 @@ template<> void dataController::setData(std::vector<Mds> list){
 
     QTextStream out(&file);
     for (int i = 0; i < list.size(); i++){
-        out << list[i].get_id() << ";" << list[i].get_name().c_str() << ";" << list[i].get_firstname().c_str() << ";" << list[i].get_email().c_str() << ";" << list[i].get_phone().c_str() << ";" << list[i].get_position().c_str() << "\n";
+        out << list[i].get_id() << ";" << list[i].get_name().c_str() << ";" << list[i].get_firstname().c_str() << ";" << list[i].get_id_company() << ";" << list[i].get_email().c_str() << ";" << list[i].get_phone().c_str() << ";" << list[i].get_position().c_str() << "\n";
     }
     file.close();
 }
