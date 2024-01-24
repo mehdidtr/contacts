@@ -1,6 +1,6 @@
 #include "mds.h"
 
-Mds::Mds(int id, std::string name, std::string firstname, std::string email, std::string phone, std::string position)
+Mds::Mds(int id, std::string name, std::string firstname, std::string email, std::string phone, std::string position, int id_company)
 {
     this->id = id;
     this->name = name;
@@ -8,8 +8,8 @@ Mds::Mds(int id, std::string name, std::string firstname, std::string email, std
     this->email = email;
     this->phone = phone;
     this->position = position;
+    this->id_company = id_company;
 }
-
 
 Mds::~Mds()
 {
@@ -30,6 +30,10 @@ int Mds::get_id()
 {
     return id;
 }
+int Mds::get_id_company()
+{
+    return id_company;
+}
 Company* Mds::get_company()
 {
     return company_mds;
@@ -49,6 +53,10 @@ std::string Mds::get_position()
 void Mds::set_email(std::string email)
 {
     this->email = email;
+}
+void Mds::set_id_company(int id_company)
+{
+    this->id_company = id_company;
 }
 void Mds::set_id(int id)
 {
