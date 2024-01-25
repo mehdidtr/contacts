@@ -5,6 +5,7 @@ Company::Company(int id, std::string nom, std::string domaine) : id(id), nom(nom
     this->id = id;
     this->nom = nom;
     this->domaine = domaine;
+    this->mdsList = std::vector<Mds*>();
 }
 
 // Getters
@@ -31,4 +32,13 @@ void Company::setNom(std::string nom) {
 
 void Company::setDomaine(std::string domaine) {
     this->domaine = domaine;
+}
+std::vector<Mds*> Company::getMdsList() {
+    return mdsList;
+}
+void Company::setMdsList(std::vector<Mds*> mdsList) {
+    this->mdsList = mdsList;
+}
+void Company::addMds(Mds* mds) {
+    this->mdsList.push_back(mds);
 }

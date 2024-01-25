@@ -18,7 +18,6 @@ class Internship
         Mds* idMaster;
     public:
         Internship(int idInternship, std::string subject, std::string timeBegin, std::string timeEnd);
-
         int getIdInternship() const;
         void setIdInternship(int newIdInternship);
         std::string getSubject() const;

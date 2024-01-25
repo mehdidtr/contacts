@@ -9,8 +9,9 @@ dataController::~dataController()
 
 //Permet de parse les données du fichier csv et de les stocker dans un vecteur de la classe MDS avec QT
 template<> std::vector<Mds> dataController::getData(){
+    std::cout << QDir::currentPath().toStdString()<<std::endl;
     std::vector <Mds> listMds = std::vector<Mds>();
-    QFile file ("ressources/MDS.csv");
+    QFile file ("../contact/ressources/MDS.csv");
     if (!file.open(QIODevice::ReadOnly)) {
         std::cout << "Erreur lors de l'ouverture du fichier" << std::endl;
         return listMds;
@@ -32,7 +33,7 @@ template<> std::vector<Mds> dataController::getData(){
 
 template<> std::vector<Company> dataController::getData(){
     std::vector <Company> listCompany = std::vector<Company>();
-    QFile file("ressources/Entreprise.csv");
+    QFile file("../contact/ressources/Entreprise.csv");
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         std::cout << "Erreur lors de l'ouverture du fichier" << std::endl;
@@ -52,7 +53,7 @@ template<> std::vector<Company> dataController::getData(){
 
 template<> std::vector<Student> dataController::getData(){
     std::vector <Student> listStudent = std::vector<Student>();
-    QFile file("ressources/Etudiants.csv");
+    QFile file("../contact/ressources/Etudiants.csv");
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         std::cout << "Erreur lors de l'ouverture du fichier" << std::endl;
@@ -72,7 +73,7 @@ template<> std::vector<Student> dataController::getData(){
 
 //Permet d'ajouter les données dans le fichier csv avec QT
 template<> void dataController::setData(std::vector<Mds> list){
-    QFile file("ressources/MDS.csv");
+    QFile file("../contact/ressources/MDS.csv");
     if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
         std::cout << "Erreur lors de l'ouverture du fichier" << std::endl;
 
@@ -84,7 +85,7 @@ template<> void dataController::setData(std::vector<Mds> list){
 }
 
 template<> void dataController::setData(std::vector<Company> list){
-    QFile file("ressources/Entreprise.csv");
+    QFile file("../contact/ressources/Entreprise.csv");
     if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
         std::cout << "Erreur lors de l'ouverture du fichier" << std::endl;
 
@@ -98,7 +99,7 @@ template<> void dataController::setData(std::vector<Company> list){
 template<> std::vector<Internship> dataController::getData(){
     std::vector<Internship> internships;
 
-    QFile file("ressources/Stage.csv");
+    QFile file("../contact/ressources/Stage.csv");
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)){
         return internships;
     }
@@ -116,7 +117,7 @@ template<> std::vector<Internship> dataController::getData(){
 }
 
 template<> void dataController::setData(std::vector<Internship> list){
-    QFile file("ressources/Stage.csv");
+    QFile file("../contact/ressources/Stage.csv");
     if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
         std::cout << "Erreur lors de l'ouverture du fichier" << std::endl;
 
@@ -153,7 +154,7 @@ template<> void dataController::setData(std::vector<Internship> list){
 // }
 
 template<> void dataController::setData(std::vector<Student> list){
-    QFile file("ressources/Etudiants.csv");
+    QFile file("../contact/ressources/Etudiants.csv");
     if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
         std::cout << "Erreur lors de l'ouverture du fichier" << std::endl;
 
@@ -168,7 +169,56 @@ void dataController::connectCompanyMds(std::vector<Company>* listCompany, std::v
         for (int j = 0; j < listCompany->size(); j++){
             if (listMds->at(i).get_id_company() == listCompany->at(j).getId()){
                 listMds->at(i).set_company(&listCompany->at(j));
+                listCompany->at(j).addMds(&listMds->at(i));
             }
         }
     }
+}
+void dataController::connectMdstoInternship(std::vector<Mds>* listMds, std::vector<Internship>* listInternship){
+    QFile file("../contact/ressources/TableMDSSta.csv");
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        std::cout << "Erreur lors de l'ouverture du fichier" << std::endl;
+    }
+
+    QTextStream in(&file);
+    while (!in.atEnd()){
+        QString line = in.readLine();
+        QStringList liste = line.split(";");
+        for (int i = 0; i < listMds->size(); i++){
+            if (listMds->at(i).get_id() == liste[0].toInt()){
+                for (int j = 0; j < listInternship->size(); j++){
+                    if (listInternship->at(j).getIdInternship() == liste[1].toInt()){
+                        listMds->at(i).add_internship(*(&listInternship->at(j)));
+                        listInternship->at(j).setIdMaster(&listMds->at(i));
+                    }
+                }
+            }
+        }
+    }
+    file.close();
+}
+void dataController::connectStudentToInternship(std::vector<Student>* listStudent, std::vector<Internship>* listInternship){
+    QFile file("../contact/ressources/TableEtuSta.csv");
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        std::cout << "Erreur lors de l'ouverture du fichier" << std::endl;
+    }
+
+    QTextStream in(&file);
+    while (!in.atEnd()){
+        QString line = in.readLine();
+        QStringList liste = line.split(";");
+        for (int i = 0; i < listStudent->size(); i++){
+            if (listStudent->at(i).getIdStudent() == liste[0].toInt()){
+                for (int j = 0; j < listInternship->size(); j++){
+                    if (listInternship->at(j).getIdInternship() == liste[1].toInt()){
+                        listStudent->at(i).add_internship(*(&listInternship->at(j)));
+                        listInternship->at(j).setIdStudents(&listStudent->at(i));
+                    }
+                }
+            }
+        }
+    }
+    file.close();
 }
