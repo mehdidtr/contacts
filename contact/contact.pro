@@ -28,7 +28,7 @@ HEADERS += \
     src/view/mainview.h \
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
 
 DISTFILES += \
     ressources/Entreprise.csv \

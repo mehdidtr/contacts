@@ -23,6 +23,13 @@
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuTEST">
+    <property name="title">
+     <string>TEST</string>
+    </property>
+    <addaction name="separator"/>
+   </widget>
+   <addaction name="menuTEST"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
