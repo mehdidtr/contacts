@@ -22,11 +22,24 @@ private:
 
     QWidget* pDroiteWidget;
     QVBoxLayout* pDroiteLayout;
-    QLabel* labelCompany;
-    QLabel* labelSubject;
-    QLabel* labelMDSInfo;
-    QLabel* labelStudentInfo;
     QVBoxLayout* mainLayout;
+
+    QLabel* TitleCompany;
+    QLabel* TitleSubject;
+    QLabel* TitleMDSInfo;
+    QLabel* TitleStudentInfo;
+
+    QLabel* SubTitleCompany_Name;
+    QLabel* SubTitleCompany_domain;
+
+    QLabel* SubTitleMDS_Name;
+    QLabel* SubTitleMDS_Surname;
+    QLabel* SubTitleMDS_Contact;
+
+    QLabel* SubTitleStudent_Name;
+    QLabel* SubTitleStudent_Surname;
+    QLabel* SubTitleStudent_Mail;
+
     QPushButton* push_button;
 
 
