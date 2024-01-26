@@ -171,3 +171,4 @@ void dataController::connectCompanyMds(std::vector<Company>* listCompany, std::v
             }
         }
     }
+}

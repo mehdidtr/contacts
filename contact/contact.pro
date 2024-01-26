@@ -37,6 +37,7 @@ DISTFILES += \
     ressources/Stage.csv \
     ressources/TableEtuSta.csv \
     ressources/TableMDSSta.csv \
+    ressources/image/LOGO_ESEO.jpg \
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
