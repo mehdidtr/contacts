@@ -3,10 +3,11 @@
 dataController::dataController(/* args */)
 {
 }
+
 dataController::~dataController()
 {
 }
-//Permet de parse les données du fichier csv et de les stocker dans un vecteur de la classe MDS avec QT
+
 template<> std::vector<Mds> dataController::getData(){
     std::vector <Mds> listMds = std::vector<Mds>();
     QFile file ("ressources/MDS.csv");
@@ -24,6 +25,18 @@ template<> std::vector<Mds> dataController::getData(){
     }
     file.close();
     return listMds;
+}
+
+template<> void dataController::setData(std::vector<Mds> list){
+    QFile file("ressources/MDS.csv");
+    if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        std::cout << "Erreur lors de l'ouverture du fichier" << std::endl;
+
+    QTextStream out(&file);
+    for (std::vector<Mds>::size_type i = 0; i < list.size(); i++){
+        out << list[i].get_id() << ";" << list[i].get_name().c_str() << ";" << list[i].get_firstname().c_str() << ";" << list[i].get_email().c_str() << ";" << list[i].get_phone().c_str() << ";" << list[i].get_position().c_str() << "\n";
+    }
+    file.close();
 }
 
 template<> std::vector<Company> dataController::getData(){
@@ -45,18 +58,6 @@ template<> std::vector<Company> dataController::getData(){
     file.close();
     return listCompany;
 }
-//Permet d'ajouter les données dans le fichier csv avec QT
-template<> void dataController::setData(std::vector<Mds> list){
-    QFile file("ressources/MDS.csv");
-    if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
-        std::cout << "Erreur lors de l'ouverture du fichier" << std::endl;
-
-    QTextStream out(&file);
-    for (int i = 0; i < list.size(); i++){
-        out << list[i].get_id() << ";" << list[i].get_name().c_str() << ";" << list[i].get_firstname().c_str() << ";" << list[i].get_email().c_str() << ";" << list[i].get_phone().c_str() << ";" << list[i].get_position().c_str() << "\n";
-    }
-    file.close();
-}
 
 template<> void dataController::setData(std::vector<Company> list){
     QFile file("ressources/Company.csv");
@@ -64,7 +65,7 @@ template<> void dataController::setData(std::vector<Company> list){
         std::cout << "Erreur lors de l'ouverture du fichier" << std::endl;
 
     QTextStream out(&file);
-    for (int i = 0; i < list.size(); i++){
+    for (std::vector<Company>::size_type i = 0; i < list.size(); i++){
         out << list[i].getId() << ";" << list[i].getNom().c_str() << ";" << list[i].getDomaine().c_str() << "\n";
     }
     file.close();
