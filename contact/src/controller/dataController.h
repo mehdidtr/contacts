@@ -28,6 +28,8 @@ public:
     template <typename T> static std::vector<T> getData( );
     template <typename T> static void setData(std::vector<T> list);
     void connectCompanyMds(std::vector<Company>* listCompany, std::vector<Mds>* listMds);
+    void connectMdstoInternship(std::vector<Mds>* listMds, std::vector<Internship>* listInternship);
+    void connectStudentToInternship(std::vector<Student>* listStudent, std::vector<Internship>* listInternship);
 };
 
 #endif // DATACONTROLLER

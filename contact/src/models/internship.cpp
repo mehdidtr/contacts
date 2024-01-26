@@ -20,6 +20,7 @@ void Internship::setTimeEnd(const std::string &newTimeEnd)
     timeEnd = newTimeEnd;
 }
 
+
 Internship::Internship(int idInternship, std::string subject, std::string timeBegin , std::string timeEnd) {
     this->idInternship = idInternship;
     this->subject = subject;
