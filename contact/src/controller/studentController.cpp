@@ -31,3 +31,21 @@ void studentController::setData(std::vector<Student> list){
     }
     file.close();
 }
+
+std::vector<Student> studentController::searchStudentByName(std::string name = ""){
+    std::vector<Student> listStudent = getData();
+    if(name == "") return listStudent;
+    std::vector<Student> listStudentSearch = std::vector<Student>();
+    for (int i = 0; i < listStudent.size(); i++){
+        if (listStudent[i].getNom().find(name) != std::string::npos){
+            listStudentSearch.push_back(listStudent[i]);
+        }
+        if (listStudent[i].getPrenom().find(name) != std::string::npos){
+            listStudentSearch.push_back(listStudent[i]);
+        }
+        if(listStudent[i].getNom().find(name) != std::string::npos && listStudent[i].getPrenom().find(name) != std::string::npos){
+            listStudentSearch.push_back(listStudent[i]);
+        }
+    }
+    return listStudentSearch;
+}

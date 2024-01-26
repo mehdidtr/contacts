@@ -40,3 +40,21 @@ void mdsController::setData(std::vector<Mds> list){
     }
     file.close();
 }
+
+std::vector<Mds> mdsController::searchMdsByName(std::string name = ""){
+    std::vector<Mds> listMds = getData();
+    if(name == "") return listMds;
+    std::vector<Mds> listMdsSearch = std::vector<Mds>();
+    for (int i = 0; i < listMds.size(); i++){
+        if (listMds[i].get_name().find(name) != std::string::npos){
+            listMdsSearch.push_back(listMds[i]);
+        }
+        if (listMds[i].get_firstname().find(name) != std::string::npos){
+            listMdsSearch.push_back(listMds[i]);
+        }
+        if(listMds[i].get_name().find(name) != std::string::npos && listMds[i].get_firstname().find(name) != std::string::npos){
+            listMdsSearch.push_back(listMds[i]);
+        }
+    }
+    return listMdsSearch;
+}

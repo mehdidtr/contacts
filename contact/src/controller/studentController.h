@@ -21,6 +21,7 @@ public:
     ~studentController();
     static std::vector<Student> getData();
     static void setData(std::vector<Student> list);
+    static std::vector<Student> searchStudentByName(std::string name);
 };
 
 

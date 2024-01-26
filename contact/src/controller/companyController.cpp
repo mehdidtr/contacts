@@ -38,3 +38,15 @@ void companyController::setData(std::vector<Company> list){
     }
     file.close();
 }
+
+std::vector<Company> companyController::searchCompanyByName(std::string name = ""){
+    std::vector<Company> listCompany = getData();
+    if(name == "") return listCompany;
+    std::vector<Company> listCompanySearch = std::vector<Company>();
+    for (int i = 0; i < listCompany.size(); i++){
+        if (listCompany[i].getNom().find(name) != std::string::npos){
+            listCompanySearch.push_back(listCompany[i]);
+        }
+    }
+    return listCompanySearch;
+}

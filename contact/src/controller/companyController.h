@@ -21,6 +21,7 @@ public:
     ~companyController();
     static std::vector<Company> getData();
     static void setData(std::vector<Company> list);
+    static std::vector<Company> searchCompanyByName(std::string name);
 };
 
 

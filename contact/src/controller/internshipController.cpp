@@ -37,3 +37,32 @@ void internshipController::setData(std::vector<Internship> list){
 
     file.close();
 }
+
+std::vector<Internship> internshipController::searchInternshipBySubject(std::string subject = ""){
+    std::vector<Internship> listInternship = getData();
+    if(subject == "") return listInternship;
+    std::vector<Internship> listInternshipSearch = std::vector<Internship>();
+    for (int i = 0; i < listInternship.size(); i++){
+        if (listInternship[i].getSubject().find(subject) != std::string::npos){
+            listInternshipSearch.push_back(listInternship[i]);
+        }
+    }
+    return listInternshipSearch;
+}
+std::vector<Internship> internshipController::searchInternshipByMds(std::string mds = ""){
+    std::vector<Internship> listInternship = getData();
+    if(mds == "") return listInternship;
+    std::vector<Internship> listInternshipSearch = std::vector<Internship>();
+    for (int i = 0; i < listInternship.size(); i++){
+        if (listInternship[i].getIdMaster()->get_name().find(mds) != std::string::npos){
+            listInternshipSearch.push_back(listInternship[i]);
+        }
+        if (listInternship[i].getIdMaster()->get_firstname().find(mds) != std::string::npos){
+            listInternshipSearch.push_back(listInternship[i]);
+        }
+        if(listInternship[i].getIdMaster()->get_name().find(mds) != std::string::npos && listInternship[i].getIdMaster()->get_firstname().find(mds) != std::string::npos){
+            listInternshipSearch.push_back(listInternship[i]);
+        }
+    }
+    return listInternshipSearch;
+}

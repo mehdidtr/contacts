@@ -21,6 +21,9 @@ public:
     ~internshipController();
     static std::vector<Internship> getData();
     static void setData(std::vector<Internship> list);
+    static std::vector<Internship> searchInternshipBySubject(std::string subject);
+    static std::vector<Internship> searchInternshipByMds(std::string mds);
+    static std::vector<Internship> searchInternshipByStudent(std::string student);
 };
 
 
