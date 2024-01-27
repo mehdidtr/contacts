@@ -134,20 +134,19 @@ void MainWindow::init_pDroite(void)
 
     /* Init */
     this->pDroiteLayout->addWidget(droite);
+
     this->TitleCompany = new QLabel("Entreprise:");
-    this->SubTitleCompany_Name = new QLabel("METTRE GETDATA");
-    this->SubTitleCompany_domain = new QLabel("METTRE GETDATA");
-    this->TitleSubject = new QLabel("Sujet du stage: ");
-    this->SubjectDetails = new QLabel("METTRE GETDATA");
-    this->TitleMDSInfo = new QLabel("Maître de stage:");
-    this->SubTitleMDS_Name = new QLabel("METTRE GETDATA");
-    this->SubTitleMDS_Surname = new QLabel("METTRE GETDATA");
-    this->SubTitleMDS_Contact = new QLabel("METTRE GETDATA");
-    this->TitleStudentInfo = new QLabel("Etudiant:");
-    this->SubTitleStudent_Name = new QLabel("Nom Etu");
-    this->SubTitleStudent_Surname = new QLabel("Prénom Etu");
-    this->SubTitleStudent_Mail = new QLabel("Mail Etu");
-    this->SubTitleStudent_Promotion = new QLabel("Promotion Etu");
+    this->companyDetails = new QLabel(getCompanyData(1));
+
+    this->TitleSubject = new QLabel("Sujet du stage:");
+    this->subjectDetails = new QLabel("getSubjectData(id)");
+
+    this->TitleMDS = new QLabel("Maître de stage:");
+    this->mdsDetails = new QLabel("getMDSData(id)");
+
+    this->TitleStudent = new QLabel("Etudiant:");
+    this->studentDetails = new QLabel("getStudentData(id)");
+
     this->push_button_modify = new QPushButton("Modifier");
     connect(push_button_modify, &QPushButton::clicked, this, &MainWindow::onModifierButtonClicked);
     this->push_button_modify->setFixedWidth(100);
@@ -158,49 +157,31 @@ void MainWindow::init_pDroite(void)
     TitleCompany->setStyleSheet("font-weight: bold;");
     TitleSubject->setFont(fontTitle);
     TitleSubject->setStyleSheet("font-weight: bold;");
-    TitleMDSInfo->setFont(fontTitle);
-    TitleMDSInfo->setStyleSheet("font-weight: bold;");
-    TitleStudentInfo->setFont(fontTitle);
-    TitleStudentInfo->setStyleSheet("font-weight: bold;");
+    TitleMDS->setFont(fontTitle);
+    TitleMDS->setStyleSheet("font-weight: bold;");
+    TitleStudent->setFont(fontTitle);
+    TitleStudent->setStyleSheet("font-weight: bold;");
 
     /* Font SubTitle*/
     fontSubTitle.setPointSize(12);
-    SubTitleCompany_Name->setFont(fontSubTitle);
-    SubTitleCompany_Name->setIndent(40);
-    SubTitleCompany_domain->setFont(fontSubTitle);
-    SubTitleCompany_domain->setIndent(40);
-    SubjectDetails->setFont(fontSubTitle);
-    SubjectDetails->setIndent(40);
-    SubTitleMDS_Name->setFont(fontSubTitle);
-    SubTitleMDS_Name->setIndent(40);
-    SubTitleMDS_Surname->setFont(fontSubTitle);
-    SubTitleMDS_Surname->setIndent(40);
-    SubTitleMDS_Contact->setFont(fontSubTitle);
-    SubTitleMDS_Contact->setIndent(40);
-    SubTitleStudent_Name->setFont(fontSubTitle);
-    SubTitleStudent_Name->setIndent(40);
-    SubTitleStudent_Surname->setFont(fontSubTitle);
-    SubTitleStudent_Surname->setIndent(40);
-    SubTitleStudent_Mail->setFont(fontSubTitle);
-    SubTitleStudent_Mail->setIndent(40);
-    SubTitleStudent_Promotion->setFont(fontSubTitle);
-    SubTitleStudent_Promotion->setIndent(40);
+    companyDetails->setFont(fontSubTitle);
+    companyDetails->setIndent(40);
+    subjectDetails->setFont(fontSubTitle);
+    subjectDetails->setIndent(40);
+    mdsDetails->setFont(fontSubTitle);
+    mdsDetails->setIndent(40);
+    studentDetails->setFont(fontSubTitle);
+    studentDetails->setIndent(40);
 
     /* AddWidget */
     pDroiteLayout->addWidget(TitleCompany);
-    pDroiteLayout->addWidget(SubTitleCompany_Name);
-    pDroiteLayout->addWidget(SubTitleCompany_domain);
+    pDroiteLayout->addWidget(companyDetails);
     pDroiteLayout->addWidget(TitleSubject);
-    pDroiteLayout->addWidget(SubjectDetails);
-    pDroiteLayout->addWidget(TitleMDSInfo);
-    pDroiteLayout->addWidget(SubTitleMDS_Name);
-    pDroiteLayout->addWidget(SubTitleMDS_Surname);
-    pDroiteLayout->addWidget(SubTitleMDS_Contact);
-    pDroiteLayout->addWidget(TitleStudentInfo);
-    pDroiteLayout->addWidget(SubTitleStudent_Name);
-    pDroiteLayout->addWidget(SubTitleStudent_Surname);
-    pDroiteLayout->addWidget(SubTitleStudent_Mail);
-    pDroiteLayout->addWidget(SubTitleStudent_Promotion);
+    pDroiteLayout->addWidget(subjectDetails);
+    pDroiteLayout->addWidget(TitleMDS);
+    pDroiteLayout->addWidget(mdsDetails);
+    pDroiteLayout->addWidget(TitleStudent);
+    pDroiteLayout->addWidget(studentDetails);
     pDroiteLayout->addWidget(push_button_modify, 0, Qt::AlignRight);
 }
 
@@ -217,8 +198,8 @@ void MainWindow::init_pDroite_Modify(void)
     this->pDroiteLayout->addWidget(droite);
     this->TitleCompany = new QLabel("Entreprise:");
     this->TitleSubject = new QLabel("Sujet du stage:");
-    this->TitleMDSInfo = new QLabel("Maître de stage:");
-    this->TitleStudentInfo = new QLabel("Etudiant:");
+    this->TitleMDS = new QLabel("Maître de stage:");
+    this->TitleStudent = new QLabel("Etudiant:");
     this->push_button_save = new QPushButton("Enregistrer");
     this->lineEditCompanyName = new QLineEdit();
     this->lineEditCompanyDomain = new QLineEdit();
@@ -239,10 +220,10 @@ void MainWindow::init_pDroite_Modify(void)
     TitleCompany->setStyleSheet("font-weight: bold;");
     TitleSubject->setFont(fontTitle);
     TitleSubject->setStyleSheet("font-weight: bold;");
-    TitleMDSInfo->setFont(fontTitle);
-    TitleMDSInfo->setStyleSheet("font-weight: bold;");
-    TitleStudentInfo->setFont(fontTitle);
-    TitleStudentInfo->setStyleSheet("font-weight: bold;");
+    TitleMDS->setFont(fontTitle);
+    TitleMDS->setStyleSheet("font-weight: bold;");
+    TitleStudent->setFont(fontTitle);
+    TitleStudent->setStyleSheet("font-weight: bold;");
 
     /* AddWidget */
     pDroiteLayout->addWidget(TitleCompany);
@@ -250,11 +231,11 @@ void MainWindow::init_pDroite_Modify(void)
     pDroiteLayout->addWidget(lineEditCompanyDomain);
     pDroiteLayout->addWidget(TitleSubject);
     pDroiteLayout->addWidget(lineEditSubject);
-    pDroiteLayout->addWidget(TitleMDSInfo);
+    pDroiteLayout->addWidget(TitleMDS);
     pDroiteLayout->addWidget(lineEditMDSName);
     pDroiteLayout->addWidget(lineEditMDSSurname);
     pDroiteLayout->addWidget(lineEditMDSContact);
-    pDroiteLayout->addWidget(TitleStudentInfo);
+    pDroiteLayout->addWidget(TitleStudent);
     pDroiteLayout->addWidget(lineEditStudentName);
     pDroiteLayout->addWidget(lineEditStudentSurname);
     pDroiteLayout->addWidget(lineEditStudentMail);
@@ -264,6 +245,18 @@ void MainWindow::init_pDroite_Modify(void)
 
 void MainWindow::onSauvegarderButtonClicked()
 {
+    QString companyName = lineEditCompanyName->text();
+    QString companyDomain = lineEditCompanyDomain->text();
+    QString mdsName = lineEditMDSName->text();
+    QString mdsSurname = lineEditMDSSurname->text();
+    QString mdsContact = lineEditMDSContact->text();
+    QString studentName = lineEditStudentName->text();
+    QString studentSurname = lineEditStudentSurname->text();
+    QString studentMail = lineEditStudentMail->text();
+    QString studentPromotion = lineEditStudentPromotion->text();
+
+    // setCompanyData(companyName, companyDomain, id);
+
     QMetaObject::invokeMethod(this, "init_pDroite", Qt::QueuedConnection);
 }
 
@@ -295,6 +288,40 @@ void MainWindow::afficherResultatsDeRecherche()
         layoutResultats->addWidget(labelResultat);
     }
 }
+
+QString MainWindow::getCompanyData(int companyId)
+{
+    dataCompany = new companyController();
+
+    std::vector<Company> listeEntreprises = dataCompany->getData();
+    for(int i = 0; i<listeEntreprises.size(); i++){
+        if(listeEntreprises[i].getId() == companyId){
+            QString nomEntreprise = listeEntreprises[i].getNom().c_str();
+            QString domaineEntreprise = listeEntreprises[i].getDomaine().c_str();
+            return nomEntreprise + "\n" + domaineEntreprise;
+        }
+    }
+
+    delete dataCompany;
+}
+
+// void MainWindow::setCompanyData(const QString& nom, const QString& domaine, int id)
+// {
+//     dataCompany = new companyController();
+
+//     std::vector<Company> listeEntreprises = dataCompany->getData();
+
+//     for (int i = 0; i<listeEntreprise.size(); i++){
+//         if(listeEntreprises[i].getId() == companyId){
+//             listEntreprise[i].setNom(nom);
+//             listeEntreprises[i].setDomaine(domaine);
+//         }
+//     }
+
+//     dataCompany->setData(listeEntreprises);
+
+//     delete dataCompany;
+// }
 
 MainWindow::~MainWindow()
 {

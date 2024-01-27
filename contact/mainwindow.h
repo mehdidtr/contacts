@@ -37,22 +37,13 @@ private:
 
     QLabel* TitleCompany;
     QLabel* TitleSubject;
-    QLabel* TitleMDSInfo;
-    QLabel* TitleStudentInfo;
+    QLabel* TitleMDS;
+    QLabel* TitleStudent;
 
-    QLabel* SubTitleCompany_Name;
-    QLabel* SubTitleCompany_domain;
-
-    QLabel* SubjectDetails;
-
-    QLabel* SubTitleMDS_Name;
-    QLabel* SubTitleMDS_Surname;
-    QLabel* SubTitleMDS_Contact;
-
-    QLabel* SubTitleStudent_Name;
-    QLabel* SubTitleStudent_Surname;
-    QLabel* SubTitleStudent_Mail;
-    QLabel* SubTitleStudent_Promotion;
+    QLabel* companyDetails;
+    QLabel* subjectDetails;
+    QLabel* mdsDetails;
+    QLabel* studentDetails;
 
     QPushButton* push_button_modify;
     QPushButton* push_button_save;
@@ -71,7 +62,7 @@ private:
     QFont fontTitle;
     QFont fontSubTitle;
 
-    companyController* dataCtrl;
+    companyController* dataCompany;
 
     // PGauche
     QWidget* principal;
@@ -105,10 +96,10 @@ public:
 
 private:
     Ui::MainWindow *ui;
-
     bool isLayoutEmpty(QLayout* layout);
     void clear_pDroite(void);
-    void dataFromController();
+    QString getCompanyData(int companyId);
+    void setCompanyData(const QString& nom, const QString& domaine, int id);
 
 private slots:
     void init_pDroite_Modify(void);
