@@ -14,6 +14,8 @@
 #include <QLineEdit>
 #include <QScrollArea>
 
+#include "src/controller/companyController.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -69,7 +71,7 @@ private:
     QFont fontTitle;
     QFont fontSubTitle;
 
-//    dataController* dataCtrl;
+    companyController* dataCtrl;
 
     // PGauche
     QWidget* principal;
@@ -104,6 +106,7 @@ public:
 private:
     Ui::MainWindow *ui;
     void init_pDroite(void);   
+    bool isLayoutEmpty(QLayout* layout);
     void clear_pDroite(void);
     void dataFromController();
 

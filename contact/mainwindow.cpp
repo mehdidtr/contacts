@@ -2,17 +2,13 @@
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
-{ 
+{
     ui->setupUi(this);
     this->setWindowTitle("Ma fenêtre Qt");
     this->setGeometry(100, 100, 800, 600);
     this->init_components();
     this->init_layout();
     this->init_logo();
-
-    //this->init_pGauche();
-//    this->init_pDroite();
-
     afficherResultatsDeRecherche();
 }
 
@@ -25,19 +21,16 @@ void MainWindow::init_components(void)
     this->haut = new QWidget();
     this->gBas = new QWidget();
     this->gHaut = new QWidget();
+    this->pDroiteWidget = new QWidget();
     this->boutonEntreprise = new QPushButton("ENTREPRISE");
     this->boutonMds= new QPushButton("MAITRE DE STAGE");
     this->boutonEtudiant= new QPushButton("ETUDIANT");
     this->boutonLocalite= new QPushButton("LOCALITE");
     this->boutonAjouter= new QPushButton("Ajouter");
-
-    this->pDroiteWidget = new QWidget();
 }
 
 void MainWindow::init_layout(void)
 {
-//    this->pDroiteLayout = new QVBoxLayout();
-
     // Création d'une mainWindow
     this->setCentralWidget(this->principal);
 
@@ -68,7 +61,6 @@ void MainWindow::init_layout(void)
     this->droite->setLayout(pDroiteLayout);
     this->init_pDroite();
 
-
     // Pour la grid haute
     this->gridLayout = new QGridLayout();
     this->gHaut->setLayout(gridLayout);
@@ -83,9 +75,7 @@ void MainWindow::init_layout(void)
 
     // Connecter le signal de clic du bouton de recherche à une fonction
     connect(searchLineEdit, &QLineEdit::returnPressed, [this]() {
-        // Afficher le texte saisi dans la console
         qDebug() << "Texte de recherche : " << searchLineEdit->text();
-
         afficherResultatsDeRecherche();
     });
 
@@ -117,7 +107,6 @@ void MainWindow::init_layout(void)
 
     this->widgetResultats->setMinimumSize(300, 300);
     this->widgetResultats->setStyleSheet("background-color: lightGray; border: 10px solid black;");
-
 }
 
 void MainWindow::init_logo(void){
@@ -135,14 +124,6 @@ void MainWindow::init_logo(void){
     this->hboxlayoutHaut->addWidget(logoLabel, 0, Qt::AlignTop | Qt::AlignLeft);
 }
 
-//void MainWindow::dataFromController()
-//{
-//    dataController dc;
-//    std::vector<Company> result = dc.getData();
-//    //std::cout << result << std::endl;
-//    return 0;
-//}
-
 void MainWindow::init_pGauche(void){}
 
 void MainWindow::init_pDroite(void)
@@ -150,27 +131,21 @@ void MainWindow::init_pDroite(void)
     this->clear_pDroite();
 
     /* Init */
-
     this->pDroiteLayout->addWidget(pDroiteWidget);
-
     this->TitleCompany = new QLabel("Entreprise:");
     this->SubTitleCompany_Name = new QLabel("METTRE GETDATA");
     this->SubTitleCompany_domain = new QLabel("METTRE GETDATA");
-
     this->TitleSubject = new QLabel("Sujet du stage: ");
     this->SubjectDetails = new QLabel("METTRE GETDATA");
-
     this->TitleMDSInfo = new QLabel("Maître de stage:");
     this->SubTitleMDS_Name = new QLabel("METTRE GETDATA");
     this->SubTitleMDS_Surname = new QLabel("METTRE GETDATA");
     this->SubTitleMDS_Contact = new QLabel("METTRE GETDATA");
-
     this->TitleStudentInfo = new QLabel("Etudiant:");
     this->SubTitleStudent_Name = new QLabel("Nom Etu");
     this->SubTitleStudent_Surname = new QLabel("Prénom Etu");
     this->SubTitleStudent_Mail = new QLabel("Mail Etu");
     this->SubTitleStudent_Promotion = new QLabel("Promotion Etu");
-
     this->push_button_modify = new QPushButton("Modifier");
     connect(push_button_modify, &QPushButton::clicked, this, &MainWindow::onModifierButtonClicked);
     this->push_button_modify->setFixedWidth(100);
@@ -225,15 +200,6 @@ void MainWindow::init_pDroite(void)
     pDroiteLayout->addWidget(SubTitleStudent_Mail);
     pDroiteLayout->addWidget(SubTitleStudent_Promotion);
     pDroiteLayout->addWidget(push_button_modify, 0, Qt::AlignRight);
-
-    /* */
-//    pDroiteWidget->setLayout(pDroiteLayout);
-
-//    this->mainLayout = qobject_cast<QVBoxLayout*>(principal->layout());
-
-//    if (mainLayout) {
-//        mainLayout->addWidget(pDroiteWidget, 0, Qt::AlignTop);
-//    }
 }
 
 void MainWindow::onModifierButtonClicked()
@@ -243,16 +209,19 @@ void MainWindow::onModifierButtonClicked()
 
 void MainWindow::init_pDroite_Modify(void)
 {
-    this->clear_pDroite();
+    //if (!isLayoutEmpty(pDroiteLayout)) {
+        this->clear_pDroite();
+    //}
+
+    isLayoutEmpty(pDroiteLayout);
 
     /* Init */
-    this->pDroiteWidget->setLayout(this->pDroiteLayout);
+    this->pDroiteLayout->addWidget(pDroiteWidget);
     this->TitleCompany = new QLabel("Entreprise:");
     this->TitleSubject = new QLabel("Sujet du stage:");
     this->TitleMDSInfo = new QLabel("Maître de stage:");
     this->TitleStudentInfo = new QLabel("Etudiant:");
     this->push_button_save = new QPushButton("Enregistrer");
-
     this->lineEditCompanyName = new QLineEdit();
     this->lineEditCompanyDomain = new QLineEdit();
     this->lineEditSubject = new QLineEdit();
@@ -263,7 +232,6 @@ void MainWindow::init_pDroite_Modify(void)
     this->lineEditStudentSurname = new QLineEdit();
     this->lineEditStudentMail = new QLineEdit();
     this->lineEditStudentPromotion = new QLineEdit();
-
     connect(push_button_save, &QPushButton::clicked, this, &MainWindow::init_pDroite);
     this->push_button_save->setFixedWidth(100);
 
@@ -280,33 +248,44 @@ void MainWindow::init_pDroite_Modify(void)
 
     /* AddWidget */
     pDroiteLayout->addWidget(TitleCompany);
-//    pDroiteLayout->addWidget(lineEditCompanyName);
-//    pDroiteLayout->addWidget(lineEditCompanyDomain);
+    pDroiteLayout->addWidget(lineEditCompanyName);
+    pDroiteLayout->addWidget(lineEditCompanyDomain);
+    pDroiteLayout->addWidget(TitleSubject);
+    pDroiteLayout->addWidget(lineEditSubject);
+    pDroiteLayout->addWidget(TitleMDSInfo);
+    pDroiteLayout->addWidget(lineEditMDSName);
+    pDroiteLayout->addWidget(lineEditMDSSurname);
+    pDroiteLayout->addWidget(lineEditMDSContact);
+    pDroiteLayout->addWidget(TitleStudentInfo);
+    pDroiteLayout->addWidget(lineEditStudentName);
+    pDroiteLayout->addWidget(lineEditStudentSurname);
+    pDroiteLayout->addWidget(lineEditStudentMail);
+    pDroiteLayout->addWidget(lineEditStudentPromotion);
+    pDroiteLayout->addWidget(push_button_save, 0, Qt::AlignRight);
+}
 
-//    pDroiteLayout->addWidget(TitleSubject);
-//    pDroiteLayout->addWidget(lineEditSubject);
+bool MainWindow::isLayoutEmpty(QLayout *layout)
+{
+    if (!layout) {
+        qDebug() << "Le layout est vide";
+        return true;
+    } else {
+        qDebug() << "Le layout contient des choses";
+        int itemCount = layout->count();
+        qDebug() << "Le layout contient :" << itemCount << " LAYOUT";
+        return false;
 
-//    pDroiteLayout->addWidget(TitleMDSInfo);
-//    pDroiteLayout->addWidget(lineEditMDSName);
-//    pDroiteLayout->addWidget(lineEditMDSSurname);
-//    pDroiteLayout->addWidget(lineEditMDSContact);
+    }
 
-//    pDroiteLayout->addWidget(TitleStudentInfo);
-//    pDroiteLayout->addWidget(lineEditStudentName);
-//    pDroiteLayout->addWidget(lineEditStudentSurname);
-//    pDroiteLayout->addWidget(lineEditStudentMail);
-//    pDroiteLayout->addWidget(lineEditStudentPromotion);
-
-//    pDroiteLayout->addWidget(push_button_save, 0, Qt::AlignRight);
-
-//    mainLayout->addWidget(pDroiteWidget, 0, Qt::AlignTop);
+    int itemCount = layout->count();
+    return (itemCount == 0);
 }
 
 void MainWindow::clear_pDroite ( void )
 {
-    QLayoutItem *item;
+    QLayoutItem* item;
     if ( this->pDroiteLayout->count() > 0 ){
-        while((item = this->pDroiteLayout->takeAt(0))) {
+        while((item = this->pDroiteLayout->takeAt(0)) != nullptr) {
             this->pDroiteLayout->removeItem(item);
             if (item->widget()) {
                 delete item->widget();
@@ -318,20 +297,16 @@ void MainWindow::clear_pDroite ( void )
 
 void MainWindow::afficherResultatsDeRecherche()
 {
-    // Supprimer tous les anciens résultats avant d'afficher les nouveaux
     QLayoutItem *item;
     while ((item = layoutResultats->takeAt(0)) != nullptr) {
         delete item->widget();
         delete item;
     }
 
-    // Ajouter de nouveaux widgets pour chaque résultat
     QStringList noms = {"Alice", "Bob", "Charlie", "David", "Eva", "Frank", "Grace", "Hank", "Ivy", "Jack"};
     for (const QString &nom : noms) {
-        // Créer un widget de résultat (par exemple, un QLabel pour afficher du texte)
         QLabel *labelResultat = new QLabel(nom);
         layoutResultats->addWidget(labelResultat);
-        // Ajoutez d'autres widgets ou personnalisez selon vos besoins
     }
 }
 
