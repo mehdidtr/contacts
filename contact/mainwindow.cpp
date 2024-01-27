@@ -131,7 +131,7 @@ void MainWindow::init_pDroite(void)
     this->clear_pDroite();
 
     /* Init */
-    this->pDroiteLayout->addWidget(pDroiteWidget);
+    this->pDroiteLayout->addWidget(droite);
     this->TitleCompany = new QLabel("Entreprise:");
     this->SubTitleCompany_Name = new QLabel("METTRE GETDATA");
     this->SubTitleCompany_domain = new QLabel("METTRE GETDATA");
@@ -209,14 +209,10 @@ void MainWindow::onModifierButtonClicked()
 
 void MainWindow::init_pDroite_Modify(void)
 {
-    //if (!isLayoutEmpty(pDroiteLayout)) {
-        this->clear_pDroite();
-    //}
-
-    isLayoutEmpty(pDroiteLayout);
+    this->clear_pDroite();
 
     /* Init */
-    this->pDroiteLayout->addWidget(pDroiteWidget);
+    this->pDroiteLayout->addWidget(droite);
     this->TitleCompany = new QLabel("Entreprise:");
     this->TitleSubject = new QLabel("Sujet du stage:");
     this->TitleMDSInfo = new QLabel("Maître de stage:");
@@ -232,7 +228,7 @@ void MainWindow::init_pDroite_Modify(void)
     this->lineEditStudentSurname = new QLineEdit();
     this->lineEditStudentMail = new QLineEdit();
     this->lineEditStudentPromotion = new QLineEdit();
-    connect(push_button_save, &QPushButton::clicked, this, &MainWindow::init_pDroite);
+    connect(push_button_save, &QPushButton::clicked, this, &MainWindow::onSauvegarderButtonClicked);
     this->push_button_save->setFixedWidth(100);
 
     /* Font Title */
@@ -264,21 +260,9 @@ void MainWindow::init_pDroite_Modify(void)
     pDroiteLayout->addWidget(push_button_save, 0, Qt::AlignRight);
 }
 
-bool MainWindow::isLayoutEmpty(QLayout *layout)
+void MainWindow::onSauvegarderButtonClicked()
 {
-    if (!layout) {
-        qDebug() << "Le layout est vide";
-        return true;
-    } else {
-        qDebug() << "Le layout contient des choses";
-        int itemCount = layout->count();
-        qDebug() << "Le layout contient :" << itemCount << " LAYOUT";
-        return false;
-
-    }
-
-    int itemCount = layout->count();
-    return (itemCount == 0);
+    QMetaObject::invokeMethod(this, "init_pDroite", Qt::QueuedConnection);
 }
 
 void MainWindow::clear_pDroite ( void )

@@ -105,7 +105,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    void init_pDroite(void);   
+
     bool isLayoutEmpty(QLayout* layout);
     void clear_pDroite(void);
     void dataFromController();
@@ -116,7 +116,9 @@ private slots:
     void init_layout(void);
     void init_logo(void);
     void init_pGauche(void);
+    void init_pDroite(void);
     void afficherResultatsDeRecherche();
     void onModifierButtonClicked();
+    void onSauvegarderButtonClicked();
 };
 #endif // MAINWINDOW_H
