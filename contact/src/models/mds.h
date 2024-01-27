@@ -4,8 +4,9 @@
 #include <iostream>
 #include <stdlib.h>
 #include <string>
-#include "company.h"
-
+#include <vector>
+class Company;
+class Internship;
 class Mds
 {
 private:
@@ -17,6 +18,7 @@ private:
     int id;
     int id_company;
     Company *company_mds;
+    std::vector<Internship> *internship_mds;
 public:
     Mds();
     Mds(int id, std::string name, std::string firstname, std::string email, std::string phone, std::string position, int id_company);
@@ -29,12 +31,15 @@ public:
     void set_id(int id);
     void set_id_company(int id_company);
     void set_company(Company *company);
+    void set_internship(std::vector<Internship> *internship);
+    void add_internship(Internship internship);
     std::string get_name();
     int get_id_company();
     std::string get_firstname();
     std::string get_phone();
     std::string get_email();
     std::string get_position();
+    std::vector<Internship> *get_internship();
     int get_id();
     Company* get_company();
 };
