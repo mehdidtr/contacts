@@ -26,6 +26,7 @@ void MainWindow::init_components (void){
     this->boutonMds= new QPushButton("MAITRE DE STAGE");
     this->boutonEtudiant= new QPushButton("ETUDIANT");
     this->boutonLocalite= new QPushButton("LOCALITE");
+    this->boutonAjouter= new QPushButton("Ajouter");
 }
 
 void MainWindow::init_layout (void){
@@ -61,6 +62,7 @@ void MainWindow::init_layout (void){
     this->gridLayout->addWidget(this->boutonMds,1,1);
     this->gridLayout->addWidget(this->boutonEtudiant,1,2);
     this->gridLayout->addWidget(this->boutonLocalite,1,3);
+    this->gridLayout->addWidget(this->boutonAjouter,0,3);
 
     // // Création de la barre de recherche
     searchLineEdit = new QLineEdit(this);
@@ -74,14 +76,14 @@ void MainWindow::init_layout (void){
     });
 
     // // Ajouter la barre de recherche à la disposition gauche
-    this->gridLayout->addWidget(searchLineEdit,0,0,0,2);
+    this->gridLayout->addWidget(searchLineEdit,0,0,1,2);
 
     menuDeroulant = new QComboBox();
-    this->menuDeroulant->addItem("");
+    //this->menuDeroulant->addItem("");
     this->menuDeroulant->addItem("Ajouter une Entreprise");
     this->menuDeroulant->addItem("Ajouter un Etudiant");
     this->menuDeroulant->addItem("Ajouter un Contact");
-    this->gridLayout->addWidget(this->menuDeroulant,0,2,0,2);
+    this->gridLayout->addWidget(this->menuDeroulant,0,2);
 
 
 
@@ -104,7 +106,7 @@ void MainWindow::init_layout (void){
     this->scrollArea->setWidget(widgetResultats);
     this->scrollArea->setWidgetResizable(true);
 
-    //this->widgetResultats->setMinimumSize(300, 300);
+    this->widgetResultats->setMinimumSize(300, 300);
     this->widgetResultats->setStyleSheet("background-color: lightGray; border: 10px solid black;");
 }
 

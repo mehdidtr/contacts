@@ -39,6 +39,7 @@ private :
     QPushButton* boutonMds;
     QPushButton* boutonEtudiant;
     QPushButton* boutonLocalite;
+    QPushButton* boutonAjouter;
 
     QLineEdit *searchLineEdit;
     QComboBox *menuDeroulant;
