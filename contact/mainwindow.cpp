@@ -50,6 +50,8 @@ void MainWindow::init_layout(void)
     this->hboxlayout->addWidget(gauche);
     this->hboxlayout->addWidget(droite);
 
+    this->gauche->setMaximumSize(500,600);
+
     // Pour la subdivision gauche
     this->vboxlayoutGauche = new QVBoxLayout();
     this->gauche->setLayout(vboxlayoutGauche);
