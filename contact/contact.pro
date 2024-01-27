@@ -16,6 +16,10 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     src/controller/dataController.cpp \
+    src/controller/companyController.cpp \
+    src/controller/internshipController.cpp \
+    src/controller/studentController.cpp \
+    src/controller/mdsController.cpp \
     src/view/mainview.cpp \
 
 HEADERS += \
@@ -25,6 +29,10 @@ HEADERS += \
     src/models/student.h \
     mainwindow.h \
     src/controller/dataController.h \
+    src/controller/companyController.h \
+    src/controller/internshipController.h \
+    src/controller/studentController.h \
+    src/controller/mdsController.h \
     src/view/mainview.h \
 
 FORMS += \
@@ -37,6 +45,7 @@ DISTFILES += \
     ressources/Stage.csv \
     ressources/TableEtuSta.csv \
     ressources/TableMDSSta.csv \
+    ressources/image/LOGO_ESEO.jpg \
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -3,7 +3,9 @@
 
 #include <string>
 #include <stdlib.h>
-class internship;
+#include <vector>
+
+class Internship;
 
 class Student
 {
@@ -13,21 +15,29 @@ private:
     std::string nom;
     std::string mail;
     std::string promotion;
-    internship* idInternship;
+    std::vector<Internship>* idInternship;
+
 
 public:
     Student();
-    int getIdStudent() const;
-    void setIdStudent(int newIdStudent);
+    Student(int idStudent, std::string nom, std::string prenom, std::string mail, std::string promotion);
 
+    //GETTER
+    int getIdStudent() const;
     std::string getPrenom( void );
     std::string getNom( void );
     std::string getMail( void );
     std::string getPromotion( void );
+    std::vector<Internship>* getIdInternship( void );
+
+    //SETTER
+    void setIdStudent(int newIdStudent);
     void setPrenom(const std::string newPrenom);
     void setNom(std::string newNom);
     void setMail(std::string newMail);
     void setPromotion(std::string newPromotion);
+    void setIdInternship(std::vector<Internship>* newIdInternship);
+    void add_internship(Internship internship);
 };
 
 #endif // STUDENT_H

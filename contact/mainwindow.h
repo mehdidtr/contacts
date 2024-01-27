@@ -2,13 +2,17 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QApplication>
 #include <QLabel>
-#include <QVBoxLayout>
+#include <QPixmap>
 #include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QGridLayout>
+#include <QDebug>
 #include <QPushButton>
+#include <QComboBox>
 #include <QLineEdit>
-
-#include "src/controller/dataController.h"
+#include <QScrollArea>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -65,7 +69,33 @@ private:
     QFont fontTitle;
     QFont fontSubTitle;
 
-    dataController* dataCtrl;
+//    dataController* dataCtrl;
+
+    // PGauche
+    QWidget* principal;
+    QWidget* haut;
+    QWidget* bas;
+    QWidget* gauche;
+    QWidget* droite;
+    QWidget* gHaut;
+    QWidget* gBas;
+    QGridLayout* gridLayout;
+    QHBoxLayout* hboxlayout;
+    QHBoxLayout* hboxlayoutHaut;
+    QVBoxLayout* vboxlayoutGauche;
+    QVBoxLayout* vboxResultatsgBas;
+    QPushButton* boutonEntreprise;
+    QPushButton* boutonMds;
+    QPushButton* boutonEtudiant;
+    QPushButton* boutonLocalite;
+    QPushButton* boutonAjouter;
+
+    QLineEdit* searchLineEdit;
+    QComboBox* menuDeroulant;
+    QComboBox* ongletsStage;
+    QVBoxLayout* layoutResultats;
+    QWidget* widgetResultats;
+    QScrollArea*scrollArea;
 
 public:
     MainWindow(QWidget *parent = nullptr);
@@ -73,14 +103,17 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    void init_components(void);
-    void init_layout(void);
     void init_pDroite(void);   
     void clear_pDroite(void);
     void dataFromController();
 
 private slots:
     void init_pDroite_Modify(void);
-
+    void init_components(void);
+    void init_layout(void);
+    void init_logo(void);
+    void init_pGauche(void);
+    void afficherResultatsDeRecherche();
+    void onModifierButtonClicked();
 };
 #endif // MAINWINDOW_H

@@ -1,6 +1,8 @@
+#include "internship.h"
+#include "company.h"
 #include "mds.h"
 
-Mds::Mds(int id, std::string name, std::string firstname, std::string email, std::string phone, std::string position)
+Mds::Mds(int id, std::string name, std::string firstname, std::string email, std::string phone, std::string position, int id_company)
 {
     this->id = id;
     this->name = name;
@@ -8,9 +10,9 @@ Mds::Mds(int id, std::string name, std::string firstname, std::string email, std
     this->email = email;
     this->phone = phone;
     this->position = position;
+    this->id_company = id_company;
+    this->internship_mds = new std::vector<Internship>();
 }
-
-
 Mds::~Mds()
 {
 }
@@ -29,6 +31,10 @@ std::string Mds::get_email()
 int Mds::get_id()
 {
     return id;
+}
+int Mds::get_id_company()
+{
+    return id_company;
 }
 Company* Mds::get_company()
 {
@@ -50,6 +56,10 @@ void Mds::set_email(std::string email)
 {
     this->email = email;
 }
+void Mds::set_id_company(int id_company)
+{
+    this->id_company = id_company;
+}
 void Mds::set_id(int id)
 {
     this->id = id;
@@ -62,7 +72,6 @@ void Mds::set_name(std::string name)
 {
     this->name = name;
 }
-
 void Mds::set_phone(std::string phone)
 {
     this->phone = phone;
@@ -70,4 +79,16 @@ void Mds::set_phone(std::string phone)
 void Mds::set_position(std::string position)
 {
     this->position = position;
+}
+void Mds::set_internship(std::vector<Internship> *internship)
+{
+    this->internship_mds = internship;
+}
+std::vector<Internship> *Mds::get_internship()
+{
+    return internship_mds;
+}
+void Mds::add_internship(Internship internship)
+{
+    this->internship_mds->push_back(internship);
 }
