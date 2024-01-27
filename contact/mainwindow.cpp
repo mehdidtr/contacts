@@ -25,44 +25,17 @@ void MainWindow::init_layout(void)
 
 }
 
-void MainWindow::dataFromController(int id)
+void MainWindow::dataFromController()
 {
-    // Récupérer la bonne ligne du CSV grâce à l'id de stage retourné par Maxime !!!!
-//    dataCtrl = new dataController();
-
-//    std::vector<Company> companyName = dataCtrl->getData<Company>();
-
-//    auto it = std::find_if(companyName.begin(), companyName.end(), [id](const Company& company) {
-//       return company.getId() == id;
-//    });
-
-//    // Vérifier si l'entreprise avec l'ID spécifié a été trouvée
-//    if (it != companyName.end()) {
-//        // L'entreprise a été trouvée, faites quelque chose avec les données
-//        const Company& foundCompany = *it;
-
-//        // Par exemple, afficher le nom de l'entreprise dans un QLineEdit
-//        ui->lineEditCompany->setText(QString::fromStdString(foundCompany.getNom()));
-//    } else {
-//        // L'entreprise avec l'ID spécifié n'a pas été trouvée, faites quelque chose en conséquence
-//        ui->lineEditCompany->setText("Entreprise non trouvée");
-//    }
-
+    dataController dc;
+    std::vector<Company> result = dc.getData();
+    //std::cout << result << std::endl;
+    return 0;
 }
 
 void MainWindow::init_pDroite(void)
 {
     this->clear_pDroite();
-
-
-    //Conversion de CSV à string
-//    if (!companyName.empty()) {
-//        QString companyInfo = "Company Name: " + QString::fromStdString(companyName[0].getName());
-//        this->SubTitleCompany_Name = new QLabel(companyInfo);
-//    } else {
-//        // Gérer le cas où le vecteur est vide
-//        this->SubTitleCompany_Name = new QLabel("Aucune entreprise disponible");
-//    }
 
     /* Init */
     this->pDroiteWidget->setLayout(this->pDroiteLayout);

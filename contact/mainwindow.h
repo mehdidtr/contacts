@@ -77,7 +77,7 @@ private:
     void init_layout(void);
     void init_pDroite(void);   
     void clear_pDroite(void);
-    void dataFromController(int id);
+    void dataFromController();
 
 private slots:
     void init_pDroite_Modify(void);
