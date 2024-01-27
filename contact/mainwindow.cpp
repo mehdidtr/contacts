@@ -1,6 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "src/view/formulaireAjoutEntreprise.h"
+#include "src/view/formulaireAjoutContact.h"
+#include "src/view/formulaireAjoutEtudiant.h"
+
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
 {
     this->setWindowTitle("Ma fenêtre Qt");
@@ -27,6 +31,11 @@ void MainWindow::init_components (void){
     this->boutonEtudiant= new QPushButton("ETUDIANT");
     this->boutonLocalite= new QPushButton("LOCALITE");
     this->boutonAjouter= new QPushButton("Ajouter");
+    this->menuDeroulant = new QComboBox();
+    this->searchLineEdit = new QLineEdit(this);
+    this->widgetResultats = new QWidget();
+    this->scrollArea = new QScrollArea();
+    this->logoLabel = new QLabel(this);
 }
 
 void MainWindow::init_layout (void){
@@ -52,6 +61,7 @@ void MainWindow::init_layout (void){
     // Pour la subdivision gauche
     this->vboxlayoutGauche = new QVBoxLayout();
     this->gauche->setLayout(vboxlayoutGauche);
+    this->gauche->setMaximumSize(600,400);
     this->vboxlayoutGauche->addWidget(gHaut);
     this->vboxlayoutGauche->addWidget(gBas);
 
@@ -65,7 +75,7 @@ void MainWindow::init_layout (void){
     this->gridLayout->addWidget(this->boutonAjouter,0,3);
 
     // // Création de la barre de recherche
-    searchLineEdit = new QLineEdit(this);
+
 
     // Connecter le signal de clic du bouton de recherche à une fonction
     connect(searchLineEdit, &QLineEdit::returnPressed, [this]() {
@@ -78,26 +88,23 @@ void MainWindow::init_layout (void){
     // // Ajouter la barre de recherche à la disposition gauche
     this->gridLayout->addWidget(searchLineEdit,0,0,1,2);
 
-    menuDeroulant = new QComboBox();
-    //this->menuDeroulant->addItem("");
+
     this->menuDeroulant->addItem("Ajouter une Entreprise");
     this->menuDeroulant->addItem("Ajouter un Etudiant");
     this->menuDeroulant->addItem("Ajouter un Contact");
     this->gridLayout->addWidget(this->menuDeroulant,0,2);
 
-
-
-
+    connect(menuDeroulant, QOverload<int>::of(&QComboBox::activated), this, &MainWindow::showPopup);
 
 
     this->vboxResultatsgBas = new QVBoxLayout();
     this->gBas->setLayout(vboxResultatsgBas);
     // Resultats de la fonction recherche qui utilisera le layout ci-dessus
-    this->scrollArea = new QScrollArea();
+
     this->vboxResultatsgBas->addWidget(scrollArea);
 
     // Création d'un widget pour contenir les résultats de recherche
-    this->widgetResultats = new QWidget();
+
     this->layoutResultats = new QVBoxLayout();
 
     this->layoutResultats->addWidget(widgetResultats);
@@ -116,7 +123,7 @@ void MainWindow::init_logo(void){
         qDebug() << "Erreur : Impossible de charger l'image du logo.";
     }
 
-    QLabel* logoLabel = new QLabel(this);
+
 
     logoPixmap = logoPixmap.scaledToWidth(100, Qt::SmoothTransformation);
 
@@ -128,6 +135,7 @@ void MainWindow::init_logo(void){
 void MainWindow::init_pGauche(void){
 
 }
+
 void MainWindow::afficherResultatsDeRecherche()
 {
     // Supprimer tous les anciens résultats avant d'afficher les nouveaux
@@ -146,6 +154,24 @@ void MainWindow::afficherResultatsDeRecherche()
         // Ajoutez d'autres widgets ou personnalisez selon vos besoins
     }
 }
+
+void MainWindow::showPopup(int index) {
+
+    if (index == 0) { // Check if the selected item is "Ajouter une Entreprise"
+        FormulaireAjoutEntreprise *popupEntreprise = new FormulaireAjoutEntreprise(this);
+        popupEntreprise->exec();
+    }
+
+    if (index == 1) { // Check if the selected item is "Ajouter un Etudiant"
+        FormulaireAjoutEtudiant *popupEtudiant = new FormulaireAjoutEtudiant(this);
+        popupEtudiant->exec();
+    }
+
+    if (index == 2) { // Check if the selected item is "Ajouter un Contact"
+        FormulaireAjoutContact *popupContact = new FormulaireAjoutContact(this);
+        popupContact->exec();
+    }
+
 
 MainWindow::~MainWindow()
 {

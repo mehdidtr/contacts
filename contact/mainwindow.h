@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QApplication>
 #include <QLabel>
+#include <QDialog>
 #include <QPixmap>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -13,6 +14,8 @@
 #include <QComboBox>
 #include <QLineEdit>
 #include <QScrollArea>
+#include <QFormLayout>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -47,6 +50,29 @@ private :
     QVBoxLayout *layoutResultats;
     QWidget *widgetResultats;
     QScrollArea *scrollArea;
+    QFormLayout *formlayoutEntreprise;
+
+    QLineEdit* nomEntreprise;
+    QLineEdit* domaineEntreprise;
+    QVBoxLayout *layoutEntreprise;
+    QDialog *popupEntreprise;
+
+    QLineEdit *nomEtudiant;
+    QLineEdit *prenomEtudiant;
+    QLineEdit *promotionEtudiant;
+    QLineEdit *mailEtudiant;
+    QDialog *popupEtudiant;
+
+    QLineEdit* nomContact;
+    QLineEdit* prenomContact;
+    QLineEdit* positionContact;
+    QComboBox* menuDeroulantContact;
+    QLineEdit* mailContact;
+    QLineEdit* telContact;
+    QVBoxLayout *layoutContact;
+    QComboBox* entrepriseComboBox;
+    QLabel* logoLabel;
+    QDialog *popupContact;
 
 public:
     MainWindow(QWidget *parent = nullptr);
@@ -58,5 +84,9 @@ private:
     void init_logo(void);
     void init_pGauche(void);
     void afficherResultatsDeRecherche();
+    void showPopup(int index);
+    void validerButtonClickedCompany(void);
+    void validerButtonClickedEtudiant();
+    void validerButtonClickedContact(void);
 };
 #endif // MAINWINDOW_H
