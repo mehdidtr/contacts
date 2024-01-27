@@ -135,6 +135,7 @@ void MainWindow::init_pDroite(void)
     pDroiteLayout->addWidget(TitleStudentInfo);
     pDroiteLayout->addWidget(SubTitleStudent_Name);
     pDroiteLayout->addWidget(SubTitleStudent_Surname);
+    pDroiteLayout->addWidget(SubTitleStudent_Mail);
     pDroiteLayout->addWidget(SubTitleStudent_Promotion);
     pDroiteLayout->addWidget(push_button_modify, 0, Qt::AlignRight);
 
@@ -160,7 +161,8 @@ void MainWindow::init_pDroite_Modify(void)
     this->TitleStudentInfo = new QLabel("Etudiant:");
     this->push_button_save = new QPushButton("Enregistrer");
 
-    this->lineEditCompany = new QLineEdit();
+    this->lineEditCompanyName = new QLineEdit();
+    this->lineEditCompanyDomain = new QLineEdit();
     this->lineEditSubject = new QLineEdit();
     this->lineEditMDSName = new QLineEdit();
     this->lineEditMDSSurname = new QLineEdit();
@@ -186,7 +188,8 @@ void MainWindow::init_pDroite_Modify(void)
 
     /* AddWidget */
     pDroiteLayout->addWidget(TitleCompany);
-    pDroiteLayout->addWidget(lineEditCompany);
+    pDroiteLayout->addWidget(lineEditCompanyName);
+    pDroiteLayout->addWidget(lineEditCompanyDomain);
 
     pDroiteLayout->addWidget(TitleSubject);
     pDroiteLayout->addWidget(lineEditSubject);

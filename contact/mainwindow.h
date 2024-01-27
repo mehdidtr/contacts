@@ -51,7 +51,8 @@ private:
     QPushButton* push_button_modify;
     QPushButton* push_button_save;
 
-    QLineEdit* lineEditCompany;
+    QLineEdit* lineEditCompanyName;
+    QLineEdit* lineEditCompanyDomain;
     QLineEdit* lineEditSubject;
     QLineEdit* lineEditMDSName;
     QLineEdit* lineEditMDSSurname;
