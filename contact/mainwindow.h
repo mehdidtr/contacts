@@ -168,8 +168,8 @@ private slots:
     void onModifierButtonClicked();
     void onSauvegarderButtonClicked();
     void showPopup(int index);
-    void validerButtonClickedCompany(void);
-    void validerButtonClickedEtudiant();
-    void validerButtonClickedContact(void);
+    // void validerButtonClickedCompany(void);
+    // void validerButtonClickedEtudiant(void);
+    // void validerButtonClickedContact(void);
 };
 #endif // MAINWINDOW_H

@@ -7,6 +7,7 @@ internshipController::~internshipController()
 {
 }
 std::vector<Internship> internshipController::getData(){
+    std::cout << "internshipController" << std::endl;
     std::vector<Internship> internships;
 
     QFile file("../contact/ressources/Stage.csv");

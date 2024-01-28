@@ -1,8 +1,9 @@
 #include "studentController.h"
 
 std::vector<Student> studentController::getData(){
+    std::cout << "studentController" << std::endl;
     std::vector <Student> listStudent = std::vector<Student>();
-    QFile file("../contact/ressources/Etudiants.csv");
+    QFile file("../contact/ressources/Etudiant.csv");
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         std::cout << "Erreur lors de l'ouverture du fichier" << std::endl;

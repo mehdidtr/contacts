@@ -8,6 +8,7 @@ companyController::~companyController()
 }
 
 std::vector<Company> companyController::getData(){
+    std::cout << "companyController" << std::endl;
     std::vector <Company> listCompany = std::vector<Company>();
     QFile file("../contact/ressources/Entreprise.csv");
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text))

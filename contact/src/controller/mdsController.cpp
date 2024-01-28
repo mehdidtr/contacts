@@ -7,6 +7,7 @@ mdsController::~mdsController()
 {
 }
 std::vector<Mds> mdsController::getData(){
+    std::cout << "mdsController" << std::endl;
     std::cout << QDir::currentPath().toStdString()<<std::endl;
     std::vector <Mds> listMds = std::vector<Mds>();
     QFile file ("../contact/ressources/MDS.csv");
