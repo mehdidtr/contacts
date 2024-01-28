@@ -21,7 +21,6 @@ std::vector<Mds> mdsController::getData(){
         QString line = in.readLine();
         QStringList fields = line.split(";");
         if (fields.size() >= 7) {
-            std::cout << fields[3].toInt() << std::endl;
             Mds mds = Mds(fields[0].toInt(),fields[1].toStdString(),fields[2].toStdString(),fields[4].toStdString(),fields[5].toStdString(),fields[6].toStdString(),fields[3].toInt());
             listMds.push_back(mds);
         }
@@ -50,10 +49,7 @@ std::vector<Mds> mdsController::searchMdsByName(std::string name = ""){
         if (listMds[i].get_name().find(name) != std::string::npos){
             listMdsSearch.push_back(listMds[i]);
         }
-        if (listMds[i].get_firstname().find(name) != std::string::npos){
-            listMdsSearch.push_back(listMds[i]);
-        }
-        if(listMds[i].get_name().find(name) != std::string::npos && listMds[i].get_firstname().find(name) != std::string::npos){
+        else if (listMds[i].get_firstname().find(name) != std::string::npos){
             listMdsSearch.push_back(listMds[i]);
         }
     }

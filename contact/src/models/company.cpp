@@ -9,15 +9,15 @@ Company::Company(int id, std::string nom, std::string domaine) : id(id), nom(nom
 }
 
 // Getters
-int Company::getId() {
+int Company::getId(){
     return id;
 }
 
-std::string Company::getNom() {
+std::string Company::getNom(){
     return nom;
 }
 
-std::string Company::getDomaine() {
+std::string Company::getDomaine(){
     return domaine;
 }
 

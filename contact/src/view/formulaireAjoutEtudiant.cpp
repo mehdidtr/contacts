@@ -1,4 +1,6 @@
 #include "formulaireajoutetudiant.h"
+#include "../controller/studentController.h"
+#include "../models/student.h"
 #include <QFormLayout>
 #include <QDebug>
 
@@ -37,7 +39,9 @@ void FormulaireAjoutEtudiant::validerButtonClicked()
     QString prenom = prenomEtudiant->text();
     QString promotion = promotionEtudiant->text();
     QString mail = mailEtudiant->text();
-
+    std::vector<Student> studentList = studentController::getData();
+    studentList.push_back(Student(studentList.size(),nom.toStdString(), prenom.toStdString(), promotion.toStdString(), mail.toStdString()));
+    studentController::setData(studentList);
     qDebug() << "Nom: " << nom << ", Prenom: " << prenom << ", Promotion: " << promotion << ", Mail: " << mail;
 
     accept();

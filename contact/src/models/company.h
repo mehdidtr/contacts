@@ -20,7 +20,7 @@ class Company{
 
         // Getters
         int getId();
-        std::string getNom();
+        std::string getNom(); 
         std::string getDomaine();
         std::vector<Mds*> getMdsList();
 

@@ -1,4 +1,7 @@
 #include "formulaireajoutcontact.h"
+#include "../controller/mdsController.h"
+#include "../controller/companyController.h"
+#include "../models/mds.h"
 #include <QFormLayout>
 #include <QDebug>
 
@@ -16,10 +19,10 @@ FormulaireAjoutContact::FormulaireAjoutContact(QWidget *parent)
     validerButton = new QPushButton("Valider");
 
     // Simulation de données d'entreprises (à remplacer par vos données réelles)
-    entrepriseComboBox->addItem("Entreprise 1", QVariant("Entreprise 1"));
-    entrepriseComboBox->addItem("Entreprise 2", QVariant("Entreprise 2"));
-    entrepriseComboBox->addItem("Entreprise 3", QVariant("Entreprise 3"));
-
+    std::vector<Company> CompanyList = companyController::getData();
+    foreach (Company company, CompanyList) {
+        entrepriseComboBox->addItem(QString::fromStdString(company.getNom()), QVariant(QString::fromStdString(company.getNom())));
+    }
     QFormLayout *formLayout = new QFormLayout();
     formLayout->addRow("Nom du contact :", nomContact);
     formLayout->addRow("Prénom du contact :", prenomContact);
@@ -49,7 +52,11 @@ void FormulaireAjoutContact::validerButtonClicked()
     QString entreprise = entrepriseData.toString();
     QString mail = mailContact->text();
     QString tel = telContact->text();
-
+    std::vector<Company> companyList = companyController::getData();
+    Company company = companyList[entrepriseComboBox->currentIndex()];
+    std::vector<Mds> mdsList = mdsController::getData();
+    mdsList.push_back(Mds(mdsList.size(),nom.toStdString(), prenom.toStdString(), mail.toStdString(), tel.toStdString(),position.toStdString(), company.getId()));
+    mdsController::setData(mdsList);
     qDebug() << "Nom: " << nom << ", Prenom: " << prenom << ", Position: " << position
              << ", Entreprise: " << entreprise << ", Mail: " << mail << ", Tel: " << tel;
 
