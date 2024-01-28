@@ -183,7 +183,7 @@ void MainWindow::init_pDroite(void)
     this->TitleCompany = new QLabel("Entreprise:");
     this->companyDetails = new QLabel(getCompanyAllData(MainWindow::getCompanyId()));
     this->TitleSubject = new QLabel("Sujet du stage:");
-    this->subjectDetails = new QLabel(getSubjectData(/*MainWindow::getInternshipId()*/1));
+    this->subjectDetails = new QLabel(getSubjectData(2));
     this->TitleMDS = new QLabel("Maître de stage:");
     this->mdsDetails = new QLabel(getMDSAllData(MainWindow::getMdsId()));
     this->TitleStudent = new QLabel("Etudiant:");
