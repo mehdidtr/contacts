@@ -29,6 +29,7 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 enum class Type {Entreprise, Mds, Etudiant, Localite};
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -55,7 +56,7 @@ private:
     QLabel* studentDetails;
 
     QPushButton* push_button_modify;
-    QPushButton* push_button_save;
+    QPushButton* pushButtonSave;
 
     QLineEdit* lineEditCompanyName;
     QLineEdit* lineEditCompanyDomain;
@@ -92,7 +93,7 @@ private:
     QPushButton* boutonEntreprise;
     QPushButton* boutonMds;
     QPushButton* boutonEtudiant;
-    QPushButton* boutonLocalite;
+    // QPushButton* boutonLocalite;
     QPushButton* boutonAjouter;
 
     QLineEdit *searchLineEdit;
@@ -128,8 +129,10 @@ private:
     Type type;
 
     int idCompany;
+    int idInternship;
     int idMDS;
     int idStudent;
+
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
@@ -145,15 +148,13 @@ private:
     QString getCompanyDomain(int companyId);
     int getCompanyId();
     void setCompanyId(int companyId);
-    int getMdsId();
-    void setMdsId(int mdsId);
-    int getStudentId();
-    void setStudentId(int studentId);
     void setCompanyData(const QString& nom, const QString& domaine, int companyId);
 
     // GET & SET Subject
-    QString getSubjectData(int companyId);
-    void setSubjectData(const QString& subject, int companyId);
+    QString getSubjectData(int internshipId);
+    void setSubjectData(const QString& subject, int internshipId);
+    int getInternshipId();
+    void setInternshipId(int internshipId);
 
     // GET & SET MDS
     QString getMDSAllData(int mdsId);
@@ -161,6 +162,8 @@ private:
     QString getMDSSurname(int mdsId);
     QString getMDSContact(int mdsId);
     void setMDSData(const QString& mdsName, const QString& mdsSurname, const QString& mdsContact, int mdsId);
+    int getMdsId();
+    void setMdsId(int mdsId);
 
     // GET & SET Student
     QString getStudentAllData(int studentId);
@@ -169,6 +172,8 @@ private:
     QString getStudentMail(int studentId);
     QString getStudentPromotion(int studentId);
     void setStudentData(const QString& studentName, const QString& studentSurname, const QString& studentMail, const QString& studentPromotion, int studentId);
+    int getStudentId();
+    void setStudentId(int studentId);
 
 private slots:
     void init_pDroite_Modify(void);

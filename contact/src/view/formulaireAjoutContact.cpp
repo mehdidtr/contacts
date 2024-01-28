@@ -5,8 +5,7 @@
 #include <QFormLayout>
 #include <QDebug>
 
-FormulaireAjoutContact::FormulaireAjoutContact(QWidget *parent)
-    : QDialog(parent)
+FormulaireAjoutContact::FormulaireAjoutContact(QWidget *parent): QDialog(parent)
 {
     setWindowTitle("Ajout d'un contact");
 
@@ -18,12 +17,12 @@ FormulaireAjoutContact::FormulaireAjoutContact(QWidget *parent)
     telContact = new QLineEdit();
     validerButton = new QPushButton("Valider");
 
-    // Simulation de données d'entreprises (à remplacer par vos données réelles)
     std::vector<Company> CompanyList = companyController::getData();
     foreach (Company company, CompanyList) {
         entrepriseComboBox->addItem(QString::fromStdString(company.getNom()), QVariant(QString::fromStdString(company.getNom())));
     }
-    QFormLayout *formLayout = new QFormLayout();
+
+    QFormLayout* formLayout = new QFormLayout();
     formLayout->addRow("Nom du contact :", nomContact);
     formLayout->addRow("Prénom du contact :", prenomContact);
     formLayout->addRow("Position du contact :", positionContact);
@@ -52,6 +51,7 @@ void FormulaireAjoutContact::validerButtonClicked()
     QString entreprise = entrepriseData.toString();
     QString mail = mailContact->text();
     QString tel = telContact->text();
+
     std::vector<Company> companyList = companyController::getData();
     Company company = companyList[entrepriseComboBox->currentIndex()];
     std::vector<Mds> mdsList = mdsController::getData();

@@ -1,34 +1,33 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
 #include "src/view/formulaireAjoutEntreprise.h"
 #include "src/view/formulaireAjoutContact.h"
 #include "src/view/formulaireAjoutEtudiant.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
+    MainWindow::setStudentId(0);
+    MainWindow::setInternshipId(0);
+    MainWindow::setMdsId(0);
+    MainWindow::setCompanyId(0);
+
     ui->setupUi(this);
     this->setWindowTitle("Ma fenêtre Qt");
     this->setGeometry(100, 100, 800, 600);
     this->init_components();
     this->init_layout();
     this->init_logo();
-    MainWindow::setStudentId(0);
-    MainWindow::setMdsId(0);
-    MainWindow::setCompanyId(0);
-    if (MainWindow::getType() == Type::Entreprise){
+
+    if (MainWindow::getType() == Type::Entreprise) {
         std::vector<Company> research = companyController::searchCompanyByName("");
         afficherResultatsDeRechercheEntreprise(research, scrollArea);
-    }
-    else if (MainWindow::getType() == Type::Mds){
+    } else if (MainWindow::getType() == Type::Mds) {
         std::vector<Mds> research = mdsController::searchMdsByName("");
             afficherResultatsDeRechercheMds(research, scrollArea);
-    }
-    else if (MainWindow::getType() == Type::Etudiant){
+    } else if (MainWindow::getType() == Type::Etudiant) {
         std::vector<Student> research = studentController::searchStudentByName("");
         afficherResultatsDeRechercheEtudiant(research, scrollArea);
     }
-    //this->init_pGauche();
 }
 
 void MainWindow::init_components(void)
@@ -44,7 +43,7 @@ void MainWindow::init_components(void)
     this->boutonEntreprise = new QPushButton("ENTREPRISE");
     this->boutonMds= new QPushButton("MAITRE DE STAGE");
     this->boutonEtudiant= new QPushButton("ETUDIANT");
-    this->boutonLocalite= new QPushButton("LOCALITE");
+    //this->boutonLocalite= new QPushButton("LOCALITE");
     this->boutonAjouter= new QPushButton("Ajouter");
     this->menuDeroulant = new QComboBox();
     this->searchLineEdit = new QLineEdit(this);
@@ -94,22 +93,24 @@ void MainWindow::init_layout(void)
     this->gridLayout->addWidget(this->boutonEntreprise,1,0);
     this->gridLayout->addWidget(this->boutonMds,1,1);
     this->gridLayout->addWidget(this->boutonEtudiant,1,2);
-    this->gridLayout->addWidget(this->boutonLocalite,1,3);
+    //this->gridLayout->addWidget(this->boutonLocalite,1,3);
     this->gridLayout->addWidget(this->boutonAjouter,0,3);
 
-    // // Création de la barre de recherche
+    // Création de la barre de recherche
     connect(boutonEntreprise, &QPushButton::clicked, [this]() {
         setType(Type::Entreprise);
         searchLineEdit->setText("");
         std::vector<Company> research = companyController::searchCompanyByName("");
         afficherResultatsDeRechercheEntreprise(research, scrollArea);
     });
+
     connect(boutonMds, &QPushButton::clicked, [this]() {
         setType(Type::Mds);
         searchLineEdit->setText("");
         std::vector<Mds> research = mdsController::searchMdsByName("");
         afficherResultatsDeRechercheMds(research, scrollArea);
     });
+
     connect(boutonEtudiant, &QPushButton::clicked, [this]() {
         setType(Type::Etudiant);
         searchLineEdit->setText("");
@@ -117,26 +118,22 @@ void MainWindow::init_layout(void)
         afficherResultatsDeRechercheEtudiant(research, scrollArea);
     });
 
-     // Connecter le signal de clic du bouton de recherche à une fonction
+    // Connecter le signal de clic du bouton de recherche à une fonction
     connect(searchLineEdit, &QLineEdit::returnPressed, [this]() {
-        // Afficher le texte saisi dans la console
-        qDebug() << "Texte de recherche : " << searchLineEdit->text();
-        if (MainWindow::getType() == Type::Entreprise){
+        // qDebug() << "Texte de recherche : " << searchLineEdit->text();
+        if (MainWindow::getType() == Type::Entreprise) {
             std::vector<Company> research = companyController::searchCompanyByName(searchLineEdit->text().toStdString());
             afficherResultatsDeRechercheEntreprise(research, scrollArea);
-        }
-        else if (MainWindow::getType() == Type::Mds){
+        } else if (MainWindow::getType() == Type::Mds) {
             std::vector<Mds> research = mdsController::searchMdsByName(searchLineEdit->text().toStdString());
             afficherResultatsDeRechercheMds(research, scrollArea);
-        }
-        else if (MainWindow::getType() == Type::Etudiant){
+        } else if (MainWindow::getType() == Type::Etudiant) {
             std::vector<Student> research = studentController::searchStudentByName(searchLineEdit->text().toStdString());
             afficherResultatsDeRechercheEtudiant(research, scrollArea);
         }
     });
-    // Ajouter la barre de recherche à la disposition gauche
-    this->gridLayout->addWidget(searchLineEdit,0,0,1,2);
 
+    this->gridLayout->addWidget(searchLineEdit,0,0,1,2);
 
     this->menuDeroulant->addItem("Ajouter une Entreprise");
     this->menuDeroulant->addItem("Ajouter un Etudiant");
@@ -148,17 +145,13 @@ void MainWindow::init_layout(void)
 
     this->vboxResultatsgBas = new QVBoxLayout();
     this->gBas->setLayout(vboxResultatsgBas);
-    // Resultats de la fonction recherche qui utilisera le layout ci-dessus
 
     this->vboxResultatsgBas->addWidget(scrollArea);
-
-    // Création d'un widget pour contenir les résultats de recherche
 
     this->layoutResultats = new QVBoxLayout();
 
     this->layoutResultats->addWidget(widgetResultats);
 
-    // Create a QVBoxLayout to hold the components
     this->scrollArea->setWidgetResizable(true);
 
     this->widgetResultats->setMinimumSize(300, 300);
@@ -167,16 +160,13 @@ void MainWindow::init_layout(void)
 
 void MainWindow::init_logo(void){
     QPixmap logoPixmap("../contact/ressources/image/LOGO_ESEO.jpg");
+
     if (logoPixmap.isNull()) {
         qDebug() << "Erreur : Impossible de charger l'image du logo.";
     }
 
-
-
     logoPixmap = logoPixmap.scaledToWidth(100, Qt::SmoothTransformation);
-
     logoLabel->setPixmap(logoPixmap);
-
     this->hboxlayoutHaut->addWidget(logoLabel, 0, Qt::AlignTop | Qt::AlignLeft);
 }
 
@@ -189,16 +179,17 @@ void MainWindow::init_pDroite(void)
     /* Init */
     this->pDroiteLayout->addWidget(droite);
     this->TitleCompany = new QLabel("Entreprise:");
-    this->companyDetails = new QLabel(getCompanyAllData(1));
+    this->companyDetails = new QLabel(getCompanyAllData(MainWindow::getCompanyId()));
     this->TitleSubject = new QLabel("Sujet du stage:");
-    this->subjectDetails = new QLabel(getSubjectData(1));
+    this->subjectDetails = new QLabel(getSubjectData(/*MainWindow::getInternshipId()*/1));
     this->TitleMDS = new QLabel("Maître de stage:");
-    this->mdsDetails = new QLabel(getMDSAllData(1));
+    this->mdsDetails = new QLabel(getMDSAllData(MainWindow::getMdsId()));
     this->TitleStudent = new QLabel("Etudiant:");
-    this->studentDetails = new QLabel(getStudentAllData(1));
+    this->studentDetails = new QLabel(getStudentAllData(MainWindow::getStudentId()));
     this->push_button_modify = new QPushButton("Modifier");
     connect(push_button_modify, &QPushButton::clicked, this, &MainWindow::onModifierButtonClicked);
     this->push_button_modify->setFixedWidth(100);
+    /* END Init */
 
     /* Font Title*/
     fontTitle.setPointSize(14);
@@ -210,8 +201,9 @@ void MainWindow::init_pDroite(void)
     TitleMDS->setStyleSheet("font-weight: bold;");
     TitleStudent->setFont(fontTitle);
     TitleStudent->setStyleSheet("font-weight: bold;");
+    /* END Font Title*/
 
-    /* Font SubTitle*/
+    /* Font SubTitle */
     fontSubTitle.setPointSize(12);
     companyDetails->setFont(fontSubTitle);
     companyDetails->setIndent(40);
@@ -221,6 +213,7 @@ void MainWindow::init_pDroite(void)
     mdsDetails->setIndent(40);
     studentDetails->setFont(fontSubTitle);
     studentDetails->setIndent(40);
+    /* END Font SubTitle */
 
     /* AddWidget */
     pDroiteLayout->addWidget(TitleCompany);
@@ -232,6 +225,7 @@ void MainWindow::init_pDroite(void)
     pDroiteLayout->addWidget(TitleStudent);
     pDroiteLayout->addWidget(studentDetails);
     pDroiteLayout->addWidget(push_button_modify, 0, Qt::AlignRight);
+    /* END AddWidget */
 }
 
 void MainWindow::onModifierButtonClicked()
@@ -243,57 +237,67 @@ void MainWindow::init_pDroite_Modify(void)
 {
     this->clear_pDroite();
 
-    // Créer une méthode qui récupère les id
-
     /* Init */
     this->pDroiteLayout->addWidget(droite);
-    this->TitleCompany = new QLabel("Entreprise:");
-    this->TitleSubject = new QLabel("Sujet du stage:");
-    this->TitleMDS = new QLabel("Maître de stage:");
-    this->TitleStudent = new QLabel("Etudiant:");
 
-    this->lineEditCompanyName = new QLineEdit(getCompanyName(MainWindow::getCompanyId()));
-    this->lineEditCompanyDomain = new QLineEdit(getCompanyDomain(MainWindow::getCompanyId()));
-    this->lineEditSubject = new QLineEdit(getSubjectData(MainWindow::getCompanyId()));
-    this->lineEditMDSName = new QLineEdit(getMDSName(MainWindow::getMdsId()));
-    this->lineEditMDSSurname = new QLineEdit(getMDSSurname(MainWindow::getMdsId()));
-    this->lineEditMDSContact = new QLineEdit(getMDSContact(MainWindow::getMdsId()));
-    this->lineEditStudentName = new QLineEdit(getStudentNom(MainWindow::getStudentId()));
-    this->lineEditStudentSurname = new QLineEdit(getStudentPrenom(MainWindow::getStudentId()));
-    this->lineEditStudentMail = new QLineEdit(getStudentMail(MainWindow::getStudentId()));
-    this->lineEditStudentPromotion = new QLineEdit(getStudentPromotion(MainWindow::getStudentId()));
+    QLabel* titleCompany = new QLabel("Entreprise:");
+    QLabel* titleSubject = new QLabel("Sujet du stage:");
+    QLabel* titleMDS = new QLabel("Maître de stage:");
+    QLabel* titleStudent = new QLabel("Etudiant:");
 
-    this->push_button_save = new QPushButton("Enregistrer");
-    connect(push_button_save, &QPushButton::clicked, this, &MainWindow::onSauvegarderButtonClicked);
-    this->push_button_save->setFixedWidth(100);
+    QLineEdit* lineEditCompanyName = new QLineEdit(getCompanyName(MainWindow::getCompanyId()));
+    QLineEdit* lineEditCompanyDomain = new QLineEdit(getCompanyDomain(MainWindow::getCompanyId()));
+    QLineEdit* lineEditSubject = new QLineEdit(getSubjectData(MainWindow::getCompanyId()));
+    QLineEdit* lineEditMDSName = new QLineEdit(getMDSName(MainWindow::getMdsId()));
+    QLineEdit* lineEditMDSSurname = new QLineEdit(getMDSSurname(MainWindow::getMdsId()));
+    QLineEdit* lineEditMDSContact = new QLineEdit(getMDSContact(MainWindow::getMdsId()));
+    QLineEdit* lineEditStudentName = new QLineEdit(getStudentNom(MainWindow::getStudentId()));
+    QLineEdit* lineEditStudentSurname = new QLineEdit(getStudentPrenom(MainWindow::getStudentId()));
+    QLineEdit* lineEditStudentMail = new QLineEdit(getStudentMail(MainWindow::getStudentId()));
+    QLineEdit* lineEditStudentPromotion = new QLineEdit(getStudentPromotion(MainWindow::getStudentId()));
+
+    this->pushButtonSave = new QPushButton("Enregistrer");
+    connect(pushButtonSave, &QPushButton::clicked, this, &MainWindow::onSauvegarderButtonClicked);
+    pushButtonSave->setFixedWidth(100);
+    /* END Init */
 
     /* Font Title */
+    QFont fontTitle;
     fontTitle.setPointSize(14);
-    TitleCompany->setFont(fontTitle);
-    TitleCompany->setStyleSheet("font-weight: bold;");
-    TitleSubject->setFont(fontTitle);
-    TitleSubject->setStyleSheet("font-weight: bold;");
-    TitleMDS->setFont(fontTitle);
-    TitleMDS->setStyleSheet("font-weight: bold;");
-    TitleStudent->setFont(fontTitle);
-    TitleStudent->setStyleSheet("font-weight: bold;");
+    titleCompany->setFont(fontTitle);
+    titleCompany->setStyleSheet("font-weight: bold;");
+    titleSubject->setFont(fontTitle);
+    titleSubject->setStyleSheet("font-weight: bold;");
+    titleMDS->setFont(fontTitle);
+    titleMDS->setStyleSheet("font-weight: bold;");
+    titleStudent->setFont(fontTitle);
+    titleStudent->setStyleSheet("font-weight: bold;");
+    /* END Font Title */
 
     /* AddWidget */
-    pDroiteLayout->addWidget(TitleCompany);
+    QVBoxLayout* widgetLayout = new QVBoxLayout();
+
+    pDroiteLayout->addWidget(titleCompany);
     pDroiteLayout->addWidget(lineEditCompanyName);
     pDroiteLayout->addWidget(lineEditCompanyDomain);
-    pDroiteLayout->addWidget(TitleSubject);
+    pDroiteLayout->addWidget(titleSubject);
     pDroiteLayout->addWidget(lineEditSubject);
-    pDroiteLayout->addWidget(TitleMDS);
+    pDroiteLayout->addWidget(titleMDS);
     pDroiteLayout->addWidget(lineEditMDSName);
     pDroiteLayout->addWidget(lineEditMDSSurname);
     pDroiteLayout->addWidget(lineEditMDSContact);
-    pDroiteLayout->addWidget(TitleStudent);
+    pDroiteLayout->addWidget(titleStudent);
     pDroiteLayout->addWidget(lineEditStudentName);
     pDroiteLayout->addWidget(lineEditStudentSurname);
     pDroiteLayout->addWidget(lineEditStudentMail);
     pDroiteLayout->addWidget(lineEditStudentPromotion);
-    pDroiteLayout->addWidget(push_button_save, 0, Qt::AlignRight);
+    pDroiteLayout->addWidget(pushButtonSave, 0, Qt::AlignRight);
+
+    QWidget* widgetContainer = new QWidget();
+    widgetContainer->setLayout(widgetLayout);
+
+    pDroiteLayout->addWidget(widgetContainer);
+    /* END AddWidget */
 }
 
 void MainWindow::onSauvegarderButtonClicked()
@@ -309,10 +313,10 @@ void MainWindow::onSauvegarderButtonClicked()
     QString studentMail = lineEditStudentMail->text();
     QString studentPromotion = lineEditStudentPromotion->text();
 
-    setCompanyData(companyName, companyDomain, 1);
-    setSubjectData(subject, 1);
-    setMDSData(mdsName, mdsSurname, mdsContact, 1);
-    setStudentData(studentName, studentSurname, studentMail, studentPromotion, 1);
+    setCompanyData(companyName, companyDomain, MainWindow::getCompanyId());
+    setSubjectData(subject, MainWindow::getInternshipId());
+    setMDSData(mdsName, mdsSurname, mdsContact, MainWindow::getMdsId());
+    setStudentData(studentName, studentSurname, studentMail, studentPromotion, MainWindow::getStudentId());
 
     QMetaObject::invokeMethod(this, "init_pDroite", Qt::QueuedConnection);
 }
@@ -335,167 +339,124 @@ void MainWindow::afficherResultatsDeRechercheEntreprise(std::vector<Company> com
 {
     QVBoxLayout* scrollLayout = new QVBoxLayout();
 
+    QLayoutItem* item;
 
-    // Supprimer tous les anciens résultats avant d'afficher les nouveaux
-    QLayoutItem *item;
     while ((item = layoutResultats->takeAt(0)) != nullptr) {
         delete item->widget();
         delete item;
     }
 
-    // Ajouter de nouveaux widgets pour chaque résultat
-    QStringList noms = {"Alice", "Bob", "Charlie", "David", "Eva", "Frank", "Grace", "Hank", "Ivy", "Jack"};
-    for (const QString &nom : noms) {
-        // Créer un widget de résultat (par exemple, un QLabel pour afficher du texte)
-        QLabel *labelResultat = new QLabel(nom);
-        layoutResultats->addWidget(labelResultat);
-        // Ajoutez d'autres widgets ou personnalisez selon vos besoins
-    }
-
-    // Add components for each company to the scroll layout
     for (Company& company : companies) {
-        // Create a button for each company with the name and domain as the button's text
         QPushButton* button = new QPushButton(company.getNom().c_str() + QString(" - ") + company.getDomaine().c_str());
+
         scrollLayout->addWidget(button);
-        // Le bouton sont plat et grand pour que l'utilisateur puisse cliquer dessus facilement
         button->setFlat(true);
         button->setMinimumHeight(50);
-        // Le bouton est en gras pour que l'utilisateur puisse voir le nom de l'entreprise et avec des contours noirs pour que l'utilisateur puisse voir les limites du bouton
         button->setStyleSheet("font-weight: bold; border: 1px solid black;");
-        // Change le curseur de la souris quand il passe sur le bouton
         button->setCursor(Qt::PointingHandCursor);
-        // Connect the button's clicked signal to a lambda function
+
         int id = company.getId();
+
         connect(button, &QPushButton::clicked, [this, id]() {
             qDebug() << "Clicked on company " << id;
             MainWindow::setCompanyId(id);
         });
-    // Set the scroll layout as the widget for the scroll area
+    }
+
     QWidget* scrollWidget = new QWidget();
     scrollWidget->setLayout(scrollLayout);
     this->scrollArea->setWidget(scrollWidget);
-
-    }
 }
+
 void MainWindow::afficherResultatsDeRechercheEtudiant(std::vector<Student> students, QScrollArea* scrollArea)
 {
     QVBoxLayout* scrollLayout = new QVBoxLayout();
-    QLayoutItem *item;
+    QLayoutItem* item;
+
     while ((item = layoutResultats->takeAt(0)) != nullptr) {
         delete item->widget();
         delete item;
     }
 
-    // Ajouter de nouveaux widgets pour chaque résultat
-    QStringList noms = {"Alice", "Bob", "Charlie", "David", "Eva", "Frank", "Grace", "Hank", "Ivy", "Jack"};
-    for (const QString &nom : noms) {
-        // Créer un widget de résultat (par exemple, un QLabel pour afficher du texte)
-        QLabel *labelResultat = new QLabel(nom);
-        layoutResultats->addWidget(labelResultat);
-        // Ajoutez d'autres widgets ou personnalisez selon vos besoins
-    }
-
-    // Add components for each company to the scroll layout
     for (Student& student : students) {
-        // Create a button for each company with the name and domain as the button's text
         QPushButton* button = new QPushButton(student.getNom().c_str() + QString(" ") + student.getPrenom().c_str());
         scrollLayout->addWidget(button);
-        // Le bouton sont plat et grand pour que l'utilisateur puisse cliquer dessus facilement
         button->setFlat(true);
         button->setMinimumHeight(50);
-        // Le bouton est en gras pour que l'utilisateur puisse voir le nom de l'entreprise et avec des contours noirs pour que l'utilisateur puisse voir les limites du bouton
         button->setStyleSheet("font-weight: bold; border: 1px solid black;");
-        // Change le curseur de la souris quand il passe sur le bouton
         button->setCursor(Qt::PointingHandCursor);
-        // Connect the button's clicked signal to a lambda function
+
         int id = student.getIdStudent();
+
         connect(button, &QPushButton::clicked, [this, id]() {
             qDebug() << "Clicked on student " << id;
             MainWindow::setStudentId(id);
         });
-    // Set the scroll layout as the widget for the scroll area
+    }
     QWidget* scrollWidget = new QWidget();
     scrollWidget->setLayout(scrollLayout);
     this->scrollArea->setWidget(scrollWidget);
-
-    }
 }
+
 void MainWindow::afficherResultatsDeRechercheMds(std::vector<Mds> mdss, QScrollArea* scrollArea)
 {
     QVBoxLayout* scrollLayout = new QVBoxLayout();
-    QLayoutItem *item;
+    QLayoutItem* item;
+
     while ((item = layoutResultats->takeAt(0)) != nullptr) {
         delete item->widget();
         delete item;
     }
 
-    // Ajouter de nouveaux widgets pour chaque résultat
-    QStringList noms = {"Alice", "Bob", "Charlie", "David", "Eva", "Frank", "Grace", "Hank", "Ivy", "Jack"};
-    for (const QString &nom : noms) {
-        // Créer un widget de résultat (par exemple, un QLabel pour afficher du texte)
-        QLabel *labelResultat = new QLabel(nom);
-        layoutResultats->addWidget(labelResultat);
-        // Ajoutez d'autres widgets ou personnalisez selon vos besoins
-    }
-
-    // Add components for each company to the scroll layout
     for (Mds& mds : mdss) {
-        // Create a button for each company with the name and domain as the button's text
         QPushButton* button = new QPushButton(mds.get_name().c_str() + QString(" ") + mds.get_firstname().c_str());
         scrollLayout->addWidget(button);
-        // Le bouton sont plat et grand pour que l'utilisateur puisse cliquer dessus facilement
         button->setFlat(true);
         button->setMinimumHeight(50);
-        // Le bouton est en gras pour que l'utilisateur puisse voir le nom de l'entreprise et avec des contours noirs pour que l'utilisateur puisse voir les limites du bouton
         button->setStyleSheet("font-weight: bold; border: 1px solid black;");
-        // Change le curseur de la souris quand il passe sur le bouton
         button->setCursor(Qt::PointingHandCursor);
-        // Connect the button's clicked signal to a lambda function
+
         int id = mds.get_id();
+
         connect(button, &QPushButton::clicked, [this, id]() {
             qDebug() << "Clicked on mds " << id;
             MainWindow::setMdsId(id);
         });
-    // Set the scroll layout as the widget for the scroll area
+    }
+
     QWidget* scrollWidget = new QWidget();
     scrollWidget->setLayout(scrollLayout);
     this->scrollArea->setWidget(scrollWidget);
-
-    }
 }
-void MainWindow::showPopup(int index) {
 
-    if (index == 0) { // Check if the selected item is "Ajouter une Entreprise"
+void MainWindow::showPopup(int index)
+{
+    if (index == 0) {
         FormulaireAjoutEntreprise *popupEntreprise = new FormulaireAjoutEntreprise(this);
         popupEntreprise->exec();
     }
 
-    if (index == 1) { // Check if the selected item is "Ajouter un Etudiant"
+    if (index == 1) {
         FormulaireAjoutEtudiant *popupEtudiant = new FormulaireAjoutEtudiant(this);
         popupEtudiant->exec();
     }
 
-    if (index == 2) { // Check if the selected item is "Ajouter un Contact"
+    if (index == 2) {
         FormulaireAjoutContact *popupContact = new FormulaireAjoutContact(this);
         popupContact->exec();
     }
-}
-
-MainWindow::~MainWindow()
-{
-    delete ui;
-    delete this->principal;
-    delete this->vboxlayout;
 }
 
 Type MainWindow::getType()
 {
     return this->type;
 }
+
 void MainWindow::setType(Type type)
 {
     this->type = type;
 }
+
 /* GET & SET Company */
 QString MainWindow::getCompanyAllData(int companyId)
 {
@@ -544,31 +505,33 @@ void MainWindow::setCompanyData(const QString& nom, const QString& domaine, int 
 
     companyController::setData(listeEntreprises);
 }
+/* END Company */
 
 /* GET & SET Subject */
-QString MainWindow::getSubjectData(int subjectId)
+QString MainWindow::getSubjectData(int internshipId)
 {
     std::vector<Internship> listeInternships = internshipController::getData();
     for(int i = 0; i<listeInternships.size(); i++){
-        if(listeInternships[i].getIdInternship() == subjectId){
+        if(listeInternships[i].getIdInternship() == internshipId){
             QString subject = listeInternships[i].getSubject().c_str();
             return subject;
         }
     }
 }
 
-void MainWindow::setSubjectData(const QString& subject, int subjectId)
+void MainWindow::setSubjectData(const QString& subject, int internshipId)
 {
     std::vector<Internship> listeInternships = internshipController::getData();
 
     for (int i = 0; i<listeInternships.size(); i++){
-        if(listeInternships[i].getIdInternship() == subjectId){
+        if(listeInternships[i].getIdInternship() == internshipId){
             listeInternships[i].setSubject(subject.toStdString());
         }
     }
 
     internshipController::setData(listeInternships);
 }
+/* END Subject */
 
 /* GET & SET MDS */
 QString MainWindow::getMDSAllData(int mdsId)
@@ -633,6 +596,7 @@ void MainWindow::setMDSData(const QString& mdsName, const QString& mdsSurname, c
 
     mdsController::setData(listeMDS);
 }
+/* END Mds */
 
 /* GET & SET Student */
 QString MainWindow::getStudentAllData(int studentId)
@@ -658,7 +622,6 @@ QString MainWindow::getStudentNom(int studentId)
             return nomStudent;
         }
     }
-
 }
 
 QString MainWindow::getStudentPrenom(int studentId)
@@ -671,7 +634,6 @@ QString MainWindow::getStudentPrenom(int studentId)
             return prenomStudent;
         }
     }
-
 }
 
 QString MainWindow::getStudentMail(int studentId)
@@ -683,7 +645,6 @@ QString MainWindow::getStudentMail(int studentId)
             return mailStudent;
         }
     }
-
 }
 
 QString MainWindow::getStudentPromotion(int studentId)
@@ -695,12 +656,10 @@ QString MainWindow::getStudentPromotion(int studentId)
             return promotionStudent;
         }
     }
-
 }
 
 void MainWindow::setStudentData(const QString& studentName, const QString& studentSurname, const QString& studentMail, const QString& studentPromotion, int studentId)
 {
-
     std::vector<Student> listeStudent = studentController::getData();
 
     for (int i = 0; i<listeStudent.size(); i++){
@@ -714,28 +673,54 @@ void MainWindow::setStudentData(const QString& studentName, const QString& stude
 
     studentController::setData(listeStudent);
 }
+/* END Student */
 
+/* GETTER & SETTER ID */
 int MainWindow::getCompanyId()
 {
     return this->idCompany;
 }
+
 void MainWindow::setCompanyId(int companyId)
 {
     this->idCompany = companyId;
 }
-int MainWindow::getStudentId()
+
+int MainWindow::getInternshipId()
 {
-    return this->idStudent;
+    return this->idInternship;
 }
-void MainWindow::setStudentId(int idStudent)
+
+void MainWindow::setInternshipId(int internshipId)
 {
-    this->idStudent = idStudent;
+    this->idInternship = internshipId;
 }
+
 int MainWindow::getMdsId()
 {
     return this->idMDS;
 }
+
 void MainWindow::setMdsId(int mdsId)
 {
     this->idMDS = mdsId;
+}
+
+int MainWindow::getStudentId()
+{
+    qDebug() << "idStudent : " << idStudent;
+    return this->idStudent;
+}
+
+void MainWindow::setStudentId(int studentId)
+{
+    this->idStudent = studentId;
+}
+/* END GETTER & SETTER ID */
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+    delete this->principal;
+    delete this->vboxlayout;
 }
