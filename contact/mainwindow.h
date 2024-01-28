@@ -15,6 +15,9 @@
 #include <QLineEdit>
 #include <QScrollArea>
 #include <QFormLayout>
+#include "src/models/company.h"
+#include "src/models/student.h"
+#include "src/models/mds.h"
 
 
 #include "src/controller/companyController.h"
@@ -25,7 +28,7 @@
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
-
+enum class Type {Entreprise, Mds, Etudiant, Localite};
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -122,7 +125,7 @@ private:
     QLabel* logoLabel;
     QDialog *popupContact;
 
-
+    Type type;
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
@@ -159,14 +162,21 @@ private:
 
 private slots:
     void init_pDroite_Modify(void);
+    Type getType();
+    void setType(Type type);
+
     void init_components(void);
     void init_layout(void);
     void init_logo(void);
     void init_pGauche(void);
+
     void init_pDroite(void);
-    void afficherResultatsDeRecherche();
     void onModifierButtonClicked();
     void onSauvegarderButtonClicked();
+
+    void afficherResultatsDeRechercheEntreprise(std::vector<Company> companies, QScrollArea* scrollArea);
+    void afficherResultatsDeRechercheEtudiant(std::vector<Student> companies, QScrollArea* scrollArea);
+    void afficherResultatsDeRechercheMds(std::vector<Mds> companies, QScrollArea* scrollArea);
     void showPopup(int index);
     // void validerButtonClickedCompany(void);
     // void validerButtonClickedEtudiant(void);

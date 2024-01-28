@@ -4,14 +4,6 @@
 #include "src/view/formulaireAjoutEntreprise.h"
 #include "src/view/formulaireAjoutContact.h"
 #include "src/view/formulaireAjoutEtudiant.h"
-#include "src/controller/companyController.h"
-#include "src/controller/mdsController.h"
-#include "src/controller/studentController.h"
-#include "src/controller/internshipController.h"
-#include "src/models/internship.h"
-#include "src/models/company.h"
-#include "src/models/student.h"
-#include "src/models/mds.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -21,7 +13,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     this->init_components();
     this->init_layout();
     this->init_logo();
-    afficherResultatsDeRecherche();
+
+
+    //this->init_pGauche();
 }
 
 void MainWindow::init_components(void)
@@ -90,13 +84,13 @@ void MainWindow::init_layout(void)
     this->gridLayout->addWidget(this->boutonLocalite,1,3);
     this->gridLayout->addWidget(this->boutonAjouter,0,3);
 
-    // Création de la barre de recherche
-    searchLineEdit = new QLineEdit(this);
+    // // Création de la barre de recherche
 
 
     // Connecter le signal de clic du bouton de recherche à une fonction
     connect(searchLineEdit, &QLineEdit::returnPressed, [this]() {
         qDebug() << "Texte de recherche : " << searchLineEdit->text();
+
         afficherResultatsDeRecherche();
     });
 
@@ -111,6 +105,7 @@ void MainWindow::init_layout(void)
 
     connect(menuDeroulant, QOverload<int>::of(&QComboBox::activated), this, &MainWindow::showPopup);
 
+
     this->vboxResultatsgBas = new QVBoxLayout();
     this->gBas->setLayout(vboxResultatsgBas);
     // Resultats de la fonction recherche qui utilisera le layout ci-dessus
@@ -123,8 +118,7 @@ void MainWindow::init_layout(void)
 
     this->layoutResultats->addWidget(widgetResultats);
 
-    // Ajouter le widget des résultats à la QScrollArea
-    this->scrollArea->setWidget(widgetResultats);
+    // Create a QVBoxLayout to hold the components
     this->scrollArea->setWidgetResizable(true);
 
     this->widgetResultats->setMinimumSize(300, 300);
@@ -297,8 +291,9 @@ void MainWindow::clear_pDroite ( void )
     }
 }
 
-void MainWindow::afficherResultatsDeRecherche()
+void MainWindow::afficherResultatsDeRechercheEntreprise(std::vector<Company> companies, QScrollArea* scrollArea)
 {
+    // Supprimer tous les anciens résultats avant d'afficher les nouveaux
     QLayoutItem *item;
     while ((item = layoutResultats->takeAt(0)) != nullptr) {
         delete item->widget();
@@ -309,226 +304,8 @@ void MainWindow::afficherResultatsDeRecherche()
     for (const QString &nom : noms) {
         QLabel *labelResultat = new QLabel(nom);
         layoutResultats->addWidget(labelResultat);
+        // Ajoutez d'autres widgets ou personnalisez selon vos besoins
     }
-}
-
-/* GET & SET Company */
-QString MainWindow::getCompanyAllData(int companyId)
-{
-    std::vector<Company> listeEntreprises = companyController::getData();
-    for(int i = 0; i<listeEntreprises.size(); i++){
-        if(listeEntreprises[i].getId() == companyId){
-            QString nomEntreprise = listeEntreprises[i].getNom().c_str();
-            QString domaineEntreprise = listeEntreprises[i].getDomaine().c_str();
-            return nomEntreprise + "\n" + domaineEntreprise;
-        }
-    }
-}
-
-QString MainWindow::getCompanyName(int companyId)
-{
-    std::vector<Company> listeEntreprises = companyController::getData();
-    for(int i = 0; i<listeEntreprises.size(); i++){
-        if(listeEntreprises[i].getId() == companyId){
-            QString nomEntreprise = listeEntreprises[i].getNom().c_str();
-            return nomEntreprise;
-        }
-    }
-}
-
-QString MainWindow::getCompanyDomain(int companyId)
-{
-    std::vector<Company> listeEntreprises = companyController::getData();
-    for(int i = 0; i<listeEntreprises.size(); i++){
-        if(listeEntreprises[i].getId() == companyId){
-            QString domaineEntreprise = listeEntreprises[i].getDomaine().c_str();
-            return domaineEntreprise;
-        }
-    }
-}
-
-void MainWindow::setCompanyData(const QString& nom, const QString& domaine, int companyId)
-{
-    std::vector<Company> listeEntreprises = companyController::getData();
-
-    for (int i = 0; i<listeEntreprises.size(); i++){
-        if(listeEntreprises[i].getId() == companyId){
-            listeEntreprises[i].setNom(nom.toStdString());
-            listeEntreprises[i].setDomaine(domaine.toStdString());
-        }
-    }
-
-    companyController::setData(listeEntreprises);
-}
-
-/* GET & SET Subject */
-QString MainWindow::getSubjectData(int subjectId)
-{
-    std::vector<Internship> listeInternships = internshipController::getData();
-    for(int i = 0; i<listeInternships.size(); i++){
-        if(listeInternships[i].getIdInternship() == subjectId){
-            QString subject = listeInternships[i].getSubject().c_str();
-            return subject;
-        }
-    }
-}
-
-void MainWindow::setSubjectData(const QString& subject, int subjectId)
-{
-    std::vector<Internship> listeInternships = internshipController::getData();
-
-    for (int i = 0; i<listeInternships.size(); i++){
-        if(listeInternships[i].getIdInternship() == subjectId){
-            listeInternships[i].setSubject(subject.toStdString());
-        }
-    }
-
-    internshipController::setData(listeInternships);
-}
-
-/* GET & SET MDS */
-QString MainWindow::getMDSAllData(int mdsId)
-{
-    std::vector<Mds> listeMDS = mdsController::getData();
-    for(int i = 0; i<listeMDS.size(); i++){
-        if(listeMDS[i].get_id() == mdsId){
-            QString nomMDS = listeMDS[i].get_name().c_str();
-            QString prenomMDS = listeMDS[i].get_firstname().c_str();
-            QString contactMDS = listeMDS[i].get_email().c_str();
-            return nomMDS + "\n" + prenomMDS + "\n" + contactMDS;
-        }
-    }
-}
-
-QString MainWindow::getMDSName(int mdsId)
-{
-    std::vector<Mds> listeMDS = mdsController::getData();
-    for(int i = 0; i<listeMDS.size(); i++){
-        if(listeMDS[i].get_id() == mdsId){
-            QString nomMDS = listeMDS[i].get_name().c_str();
-            return nomMDS;
-        }
-    }
-
-    delete dataMDS;
-}
-
-QString MainWindow::getMDSSurname(int mdsId)
-{ 
-    std::vector<Mds> listeMDS = mdsController::getData();
-    for(int i = 0; i<listeMDS.size(); i++){
-        if(listeMDS[i].get_id() == mdsId){
-            QString prenomMDS = listeMDS[i].get_firstname().c_str();
-            return prenomMDS;
-        }
-    }
-}
-
-QString MainWindow::getMDSContact(int mdsId)
-{
-    std::vector<Mds> listeMDS = mdsController::getData();
-    for(int i = 0; i<listeMDS.size(); i++){
-        if(listeMDS[i].get_id() == mdsId){
-            QString contactMDS = listeMDS[i].get_email().c_str();
-            return contactMDS;
-        }
-    }
-}
-
-void MainWindow::setMDSData(const QString& mdsName, const QString& mdsSurname, const QString& mdsContact, int mdsId)
-{
-    std::vector<Mds> listeMDS = mdsController::getData();
-
-    for (int i = 0; i<listeMDS.size(); i++){
-        if(listeMDS[i].get_id() == mdsId){
-            listeMDS[i].set_name(mdsName.toStdString());
-            listeMDS[i].set_firstname(mdsSurname.toStdString());
-            listeMDS[i].set_email(mdsContact.toStdString());
-        }
-    }
-
-    mdsController::setData(listeMDS);
-}
-
-/* GET & SET Student */
-QString MainWindow::getStudentAllData(int studentId)
-{
-    std::vector<Student> listeStudent = studentController::getData();
-    for(int i = 0; i<listeStudent.size(); i++){
-        if(listeStudent[i].getIdStudent() == studentId){
-            QString nomStudent = listeStudent[i].getNom().c_str();
-            QString prenomStudent = listeStudent[i].getPrenom().c_str();
-            QString mailStudent = listeStudent[i].getMail().c_str();
-            QString promotionStudent = listeStudent[i].getPromotion().c_str();
-            return nomStudent + "\n" + prenomStudent + "\n" + mailStudent + "\n" + promotionStudent;
-        }
-    }
-}
-
-QString MainWindow::getStudentNom(int studentId)
-{
-    std::vector<Student> listeStudent = studentController::getData();
-    for(int i = 0; i<listeStudent.size(); i++){
-        if(listeStudent[i].getIdStudent() == studentId){
-            QString nomStudent = listeStudent[i].getNom().c_str();
-            return nomStudent;
-        }
-    }
-
-}
-
-QString MainWindow::getStudentPrenom(int studentId)
-{
-    std::vector<Student> listeStudent = studentController::getData();
-    for(int i = 0; i<listeStudent.size(); i++){
-        if(listeStudent[i].getIdStudent() == studentId){
-            QString prenomStudent = listeStudent[i].getPrenom().c_str();
-
-            return prenomStudent;
-        }
-    }
-
-}
-
-QString MainWindow::getStudentMail(int studentId)
-{
-    std::vector<Student> listeStudent = studentController::getData();
-    for(int i = 0; i<listeStudent.size(); i++){
-        if(listeStudent[i].getIdStudent() == studentId){
-            QString mailStudent = listeStudent[i].getMail().c_str();
-            return mailStudent;
-        }
-    }
-
-}
-
-QString MainWindow::getStudentPromotion(int studentId)
-{
-    std::vector<Student> listeStudent = studentController::getData();
-    for(int i = 0; i<listeStudent.size(); i++){
-        if(listeStudent[i].getIdStudent() == studentId){
-            QString promotionStudent = listeStudent[i].getPromotion().c_str();
-            return promotionStudent;
-        }
-    }
-
-}
-
-void MainWindow::setStudentData(const QString& studentName, const QString& studentSurname, const QString& studentMail, const QString& studentPromotion, int studentId)
-{
-
-    std::vector<Student> listeStudent = studentController::getData();
-
-    for (int i = 0; i<listeStudent.size(); i++){
-        if(listeStudent[i].getIdStudent() == studentId){
-            listeStudent[i].setNom(studentName.toStdString());
-            listeStudent[i].setPrenom(studentSurname.toStdString());
-            listeStudent[i].setMail(studentMail.toStdString());
-            listeStudent[i].setPromotion(studentPromotion.toStdString());
-        }
-    }
-
-    studentController::setData(listeStudent);
 }
 
 void MainWindow::showPopup(int index) {
@@ -548,10 +325,19 @@ void MainWindow::showPopup(int index) {
         popupContact->exec();
     }
 
-}
+
 MainWindow::~MainWindow()
 {
     delete ui;
     delete this->principal;
     delete this->vboxlayout;
+}
+
+Type MainWindow::getType()
+{
+    return this->type;
+}
+void MainWindow::setType(Type type)
+{
+    this->type = type;
 }
