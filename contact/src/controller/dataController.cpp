@@ -3,6 +3,7 @@
 dataController::dataController(/* args */)
 {
 }
+
 dataController::~dataController()
 {
 }
@@ -17,6 +18,7 @@ void dataController::connectCompanyMds(std::vector<Company>* listCompany, std::v
         }
     }
 }
+
 void dataController::connectMdstoInternship(std::vector<Mds>* listMds, std::vector<Internship>* listInternship){
     QFile file("../contact/ressources/TableMDSSta.csv");
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -41,6 +43,7 @@ void dataController::connectMdstoInternship(std::vector<Mds>* listMds, std::vect
     }
     file.close();
 }
+
 void dataController::connectStudentToInternship(std::vector<Student>* listStudent, std::vector<Internship>* listInternship){
     QFile file("../contact/ressources/TableEtuSta.csv");
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
