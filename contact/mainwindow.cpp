@@ -140,9 +140,11 @@ void MainWindow::init_layout(void)
     this->menuDeroulant->addItem("Ajouter un Contact");
     this->gridLayout->addWidget(this->menuDeroulant,0,2);
 
-    connect(menuDeroulant, QOverload<int>::of(&QComboBox::activated), this, &MainWindow::showPopup);
+    // connect(menuDeroulant, QOverload<int>::of(&QComboBox::activated), this, &MainWindow::showPopup);
 
-
+    connect(boutonAjouter, &QPushButton::clicked, [this]() {
+        showPopup(menuDeroulant->currentIndex());
+    });
     this->vboxResultatsgBas = new QVBoxLayout();
     this->gBas->setLayout(vboxResultatsgBas);
 
