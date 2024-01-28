@@ -20,6 +20,9 @@ SOURCES += \
     src/controller/internshipController.cpp \
     src/controller/studentController.cpp \
     src/controller/mdsController.cpp \
+    src/view/formulaireAjoutEntreprise.cpp \
+    src/view/formulaireajoutcontact.cpp \
+    src/view/formulaireajoutetudiant.cpp \
     src/view/mainview.cpp \
 
 HEADERS += \
@@ -33,6 +36,9 @@ HEADERS += \
     src/controller/internshipController.h \
     src/controller/studentController.h \
     src/controller/mdsController.h \
+    src/view/formulaireAjoutEntreprise.h \
+    src/view/formulaireajoutcontact.h \
+    src/view/formulaireajoutetudiant.h \
     src/view/mainview.h \
 
 FORMS += \

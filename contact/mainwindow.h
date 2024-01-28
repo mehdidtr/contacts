@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QApplication>
 #include <QLabel>
+#include <QDialog>
 #include <QPixmap>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -13,6 +14,8 @@
 #include <QComboBox>
 #include <QLineEdit>
 #include <QScrollArea>
+#include <QFormLayout>
+
 
 #include "src/controller/companyController.h"
 #include "src/controller/internshipController.h"
@@ -89,12 +92,36 @@ private:
     QPushButton* boutonLocalite;
     QPushButton* boutonAjouter;
 
-    QLineEdit* searchLineEdit;
-    QComboBox* menuDeroulant;
-    QComboBox* ongletsStage;
-    QVBoxLayout* layoutResultats;
-    QWidget* widgetResultats;
-    QScrollArea*scrollArea;
+    QLineEdit *searchLineEdit;
+    QComboBox *menuDeroulant;
+    QComboBox *ongletsStage;
+    QVBoxLayout *layoutResultats;
+    QWidget *widgetResultats;
+    QScrollArea *scrollArea;
+    QFormLayout *formlayoutEntreprise;
+
+    QLineEdit* nomEntreprise;
+    QLineEdit* domaineEntreprise;
+    QVBoxLayout *layoutEntreprise;
+    QDialog *popupEntreprise;
+
+    QLineEdit *nomEtudiant;
+    QLineEdit *prenomEtudiant;
+    QLineEdit *promotionEtudiant;
+    QLineEdit *mailEtudiant;
+    QDialog *popupEtudiant;
+
+    QLineEdit* nomContact;
+    QLineEdit* prenomContact;
+    QLineEdit* positionContact;
+    QComboBox* menuDeroulantContact;
+    QLineEdit* mailContact;
+    QLineEdit* telContact;
+    QVBoxLayout *layoutContact;
+    QComboBox* entrepriseComboBox;
+    QLabel* logoLabel;
+    QDialog *popupContact;
+
 
 public:
     MainWindow(QWidget *parent = nullptr);
@@ -140,5 +167,9 @@ private slots:
     void afficherResultatsDeRecherche();
     void onModifierButtonClicked();
     void onSauvegarderButtonClicked();
+    void showPopup(int index);
+    void validerButtonClickedCompany(void);
+    void validerButtonClickedEtudiant();
+    void validerButtonClickedContact(void);
 };
 #endif // MAINWINDOW_H

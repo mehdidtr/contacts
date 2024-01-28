@@ -1,26 +1,49 @@
-#include "formulaireAjoutEntreprise.h"
+// #include "formulaireAjoutEntreprise.h"
 
-FormulaireAjoutEntreprise::FormulaireAjoutEntreprise (QWidget* parent) : QMainWindow (parent){
-    this->setWindowTitle("Ma fenêtre Qt");
-    this->setGeometry(100, 100, 800, 600);
-    this->init_components();
-    this->init_layout();
+// FormulaireAjoutEntreprise::FormulaireAjoutEntreprise(QWidget *parent)
+// {
+
+// }
+
+// FormulaireAjoutEntreprise::~FormulaireAjoutEntreprise()
+// {
+// }
+
+#include "formulaireajoutentreprise.h"
+#include <QFormLayout>
+#include <QDebug>
+
+FormulaireAjoutEntreprise::FormulaireAjoutEntreprise(QWidget *parent)
+    : QDialog(parent)
+{
+    setWindowTitle("Ajout d'une entreprise");
+
+    nomEntreprise = new QLineEdit();
+    domaineEntreprise = new QLineEdit();
+    validerButton = new QPushButton("Valider");
+
+    QFormLayout *formLayout = new QFormLayout();
+    formLayout->addRow("Nom de l'entreprise :", nomEntreprise);
+    formLayout->addRow("Domaine de l'entreprise :", domaineEntreprise);
+
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    mainLayout->addLayout(formLayout);
+    mainLayout->addWidget(validerButton);
+
+    connect(validerButton, &QPushButton::clicked, this, &FormulaireAjoutEntreprise::validerButtonClicked);
 }
 
-void FormulaireAjoutEntreprise::init_components (void){
-    this->centre = new QWidget();
-    this->label = new QLabel ("Ceci est un label");
+FormulaireAjoutEntreprise::~FormulaireAjoutEntreprise()
+{
+    // Destruction des widgets
 }
 
-void FormulaireAjoutEntreprise::init_layout (void){
-    this->setCentralWidget(this->centre);
-    this->vboxlayout = new QVBoxLayout();
-    this->centre->setLayout(this->vboxlayout);
-    this->vboxlayout->addWidget(this->label);
-}
+void FormulaireAjoutEntreprise::validerButtonClicked()
+{
+    QString nom = nomEntreprise->text();
+    QString domaine = domaineEntreprise->text();
 
-FormulaireAjoutEntreprise::~FormulaireAjoutEntreprise(){
-    delete this->label;
-    delete this->vboxlayout;
-    delete this->centre;
+    qDebug() << "Nom: " << nom << ", Domaine: " << domaine;
+
+    accept();
 }

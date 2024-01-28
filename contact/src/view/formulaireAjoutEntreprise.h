@@ -1,26 +1,65 @@
+// #ifndef FORMULAIREAJOUTEENTREPRISE_H
+// #define FORMULAIREAJOUTEENTREPRISE_H
+
+// #include <QMainWindow>
+// #include <QLabel>
+// #include <QVBoxLayout>
+// #include <QHBoxLayout>
+// #include <QPushButton>
+// #include <QLineEdit>
+
+// #include "src/controller/dataController.h"
+
+
+// class FormulaireAjoutEntreprise
+// {
+
+// private:
+
+
+// public:
+//     FormulaireAjoutEntreprise(QWidget *parent = nullptr);
+//     ~FormulaireAjoutEntreprise();
+
+// private:
+
+// };
+// #endif // FORMULAIREAJOUTEENTREPRISE_H
+
 #ifndef FORMULAIREAJOUTENTREPRISE_H
 #define FORMULAIREAJOUTENTREPRISE_H
 
-#include <QMainWindow>
-#include <QLabel>
-#include <QVBoxLayout>
+#include <QDialog>
+#include <QLineEdit>
+#include <QPushButton>
 
-class FormulaireAjoutEntreprise : public QMainWindow {
-
+class FormulaireAjoutEntreprise : public QDialog
+{
     Q_OBJECT
 
-private :
-    QWidget* centre;
-    QLabel* label;
-    QVBoxLayout* vboxlayout;
+public:
+    FormulaireAjoutEntreprise(QWidget *parent);
+    ~FormulaireAjoutEntreprise();
 
-public :
-    FormulaireAjoutEntreprise(QWidget *parent = nullptr);
-    ~FormulaireAjoutEntreprise( );
+private:
+    QLineEdit *nomEntreprise;
+    QLineEdit *domaineEntreprise;
+    QPushButton *validerButton;
 
-private :
-    void init_components ( void );
-    void init_layout ( void );
+private slots:
+    void validerButtonClicked();
 };
 
 #endif // FORMULAIREAJOUTENTREPRISE_H
+
+
+
+
+
+
+
+
+
+
+
+
