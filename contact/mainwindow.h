@@ -15,6 +15,9 @@
 #include <QScrollArea>
 
 #include "src/controller/companyController.h"
+#include "src/controller/internshipController.h"
+#include "src/controller/mdsController.h"
+#include "src/controller/studentController.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -63,6 +66,9 @@ private:
     QFont fontSubTitle;
 
     companyController* dataCompany;
+    internshipController* dataInternship;
+    mdsController* dataMDS;
+    studentController* dataStudent;
 
     // PGauche
     QWidget* principal;
@@ -98,8 +104,31 @@ private:
     Ui::MainWindow *ui;
     bool isLayoutEmpty(QLayout* layout);
     void clear_pDroite(void);
-    QString getCompanyData(int companyId);
-    void setCompanyData(const QString& nom, const QString& domaine, int id);
+
+    // GET & SET Company
+    QString getCompanyAllData(int companyId);
+    QString getCompanyName(int companyId);
+    QString getCompanyDomain(int companyId);
+    void setCompanyData(const QString& nom, const QString& domaine, int companyId);
+
+    // GET & SET Subject
+    QString getSubjectData(int companyId);
+    void setSubjectData(const QString& subject, int companyId);
+
+    // GET & SET MDS
+    QString getMDSAllData(int mdsId);
+    QString getMDSName(int mdsId);
+    QString getMDSSurname(int mdsId);
+    QString getMDSContact(int mdsId);
+    void setMDSData(const QString& mdsName, const QString& mdsSurname, const QString& mdsContact, int mdsId);
+
+    // GET & SET Student
+    QString getStudentAllData(int studentId);
+    QString getStudentNom(int studentId);
+    QString getStudentPrenom(int studentId);
+    QString getStudentMail(int studentId);
+    QString getStudentPromotion(int studentId);
+    void setStudentData(const QString& studentName, const QString& studentSurname, const QString& studentMail, const QString& studentPromotion, int studentId);
 
 private slots:
     void init_pDroite_Modify(void);

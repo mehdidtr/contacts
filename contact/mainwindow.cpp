@@ -134,19 +134,14 @@ void MainWindow::init_pDroite(void)
 
     /* Init */
     this->pDroiteLayout->addWidget(droite);
-
     this->TitleCompany = new QLabel("Entreprise:");
-    this->companyDetails = new QLabel(getCompanyData(1));
-
+    this->companyDetails = new QLabel(getCompanyAllData(companyId));
     this->TitleSubject = new QLabel("Sujet du stage:");
-    this->subjectDetails = new QLabel("getSubjectData(id)");
-
+    this->subjectDetails = new QLabel(getSubjectData(subjectId));
     this->TitleMDS = new QLabel("Maître de stage:");
-    this->mdsDetails = new QLabel("getMDSData(id)");
-
+    this->mdsDetails = new QLabel(getMDSAllData(mdsId));
     this->TitleStudent = new QLabel("Etudiant:");
-    this->studentDetails = new QLabel("getStudentData(id)");
-
+    this->studentDetails = new QLabel(getStudentAllData(studentId));
     this->push_button_modify = new QPushButton("Modifier");
     connect(push_button_modify, &QPushButton::clicked, this, &MainWindow::onModifierButtonClicked);
     this->push_button_modify->setFixedWidth(100);
@@ -194,23 +189,27 @@ void MainWindow::init_pDroite_Modify(void)
 {
     this->clear_pDroite();
 
+    // Créer une méthode qui récupère les id
+
     /* Init */
     this->pDroiteLayout->addWidget(droite);
     this->TitleCompany = new QLabel("Entreprise:");
     this->TitleSubject = new QLabel("Sujet du stage:");
     this->TitleMDS = new QLabel("Maître de stage:");
     this->TitleStudent = new QLabel("Etudiant:");
+
+    this->lineEditCompanyName = new QLineEdit(getCompanyName(companyId));
+    this->lineEditCompanyDomain = new QLineEdit(getCompanyDomain(companyId));
+    this->lineEditSubject = new QLineEdit(getSubjectData(subjectId));
+    this->lineEditMDSName = new QLineEdit(getMDSName(mdsId));
+    this->lineEditMDSSurname = new QLineEdit(getMDSSurname(mdsId));
+    this->lineEditMDSContact = new QLineEdit(getMDSContact(mdsId));
+    this->lineEditStudentName = new QLineEdit(getStudentNom(studentId));
+    this->lineEditStudentSurname = new QLineEdit(getStudentPrenom(studentId));
+    this->lineEditStudentMail = new QLineEdit(getStudentMail(studentId));
+    this->lineEditStudentPromotion = new QLineEdit(getStudentPromotion(studentId));
+
     this->push_button_save = new QPushButton("Enregistrer");
-    this->lineEditCompanyName = new QLineEdit();
-    this->lineEditCompanyDomain = new QLineEdit();
-    this->lineEditSubject = new QLineEdit();
-    this->lineEditMDSName = new QLineEdit();
-    this->lineEditMDSSurname = new QLineEdit();
-    this->lineEditMDSContact = new QLineEdit();
-    this->lineEditStudentName = new QLineEdit();
-    this->lineEditStudentSurname = new QLineEdit();
-    this->lineEditStudentMail = new QLineEdit();
-    this->lineEditStudentPromotion = new QLineEdit();
     connect(push_button_save, &QPushButton::clicked, this, &MainWindow::onSauvegarderButtonClicked);
     this->push_button_save->setFixedWidth(100);
 
@@ -247,6 +246,7 @@ void MainWindow::onSauvegarderButtonClicked()
 {
     QString companyName = lineEditCompanyName->text();
     QString companyDomain = lineEditCompanyDomain->text();
+    QString subject = lineEditSubject->text();
     QString mdsName = lineEditMDSName->text();
     QString mdsSurname = lineEditMDSSurname->text();
     QString mdsContact = lineEditMDSContact->text();
@@ -255,7 +255,10 @@ void MainWindow::onSauvegarderButtonClicked()
     QString studentMail = lineEditStudentMail->text();
     QString studentPromotion = lineEditStudentPromotion->text();
 
-    // setCompanyData(companyName, companyDomain, id);
+    setCompanyData(companyName, companyDomain, companyId);
+    setSubjectData(subject, subjectId);
+    setMDSData(mdsName, mdsSurname, mdsContact, mdsId);
+    setStudentData(studentName, studentSurname, studentMail, studentPromotion, studentId);
 
     QMetaObject::invokeMethod(this, "init_pDroite", Qt::QueuedConnection);
 }
@@ -289,7 +292,8 @@ void MainWindow::afficherResultatsDeRecherche()
     }
 }
 
-QString MainWindow::getCompanyData(int companyId)
+/* GET & SET Company */
+QString MainWindow::getCompanyAllData(int companyId)
 {
     dataCompany = new companyController();
 
@@ -305,23 +309,268 @@ QString MainWindow::getCompanyData(int companyId)
     delete dataCompany;
 }
 
-// void MainWindow::setCompanyData(const QString& nom, const QString& domaine, int id)
-// {
-//     dataCompany = new companyController();
+QString MainWindow::getCompanyName(int companyId)
+{
+    dataCompany = new companyController();
 
-//     std::vector<Company> listeEntreprises = dataCompany->getData();
+    std::vector<Company> listeEntreprises = dataCompany->getData();
+    for(int i = 0; i<listeEntreprises.size(); i++){
+        if(listeEntreprises[i].getId() == companyId){
+            QString nomEntreprise = listeEntreprises[i].getNom().c_str();
+            return nomEntreprise;
+        }
+    }
 
-//     for (int i = 0; i<listeEntreprise.size(); i++){
-//         if(listeEntreprises[i].getId() == companyId){
-//             listEntreprise[i].setNom(nom);
-//             listeEntreprises[i].setDomaine(domaine);
-//         }
-//     }
+    delete dataCompany;
+}
 
-//     dataCompany->setData(listeEntreprises);
+QString MainWindow::getCompanyDomain(int companyId)
+{
+    dataCompany = new companyController();
 
-//     delete dataCompany;
-// }
+    std::vector<Company> listeEntreprises = dataCompany->getData();
+    for(int i = 0; i<listeEntreprises.size(); i++){
+        if(listeEntreprises[i].getId() == companyId){
+            QString domaineEntreprise = listeEntreprises[i].getDomaine().c_str();
+            return domaineEntreprise;
+        }
+    }
+
+    delete dataCompany;
+}
+
+void MainWindow::setCompanyData(const QString& nom, const QString& domaine, int companyId)
+{
+    dataCompany = new companyController();
+
+    std::vector<Company> listeEntreprises = dataCompany->getData();
+
+    for (int i = 0; i<listeEntreprises.size(); i++){
+        if(listeEntreprises[i].getId() == companyId){
+            listeEntreprises[i].setNom(nom.toStdString());
+            listeEntreprises[i].setDomaine(domaine.toStdString());
+        }
+    }
+
+    dataCompany->setData(listeEntreprises);
+
+    delete dataCompany;
+}
+
+/* GET & SET Subject */
+QString MainWindow::getSubjectData(int subjectId)
+{
+    dataInternship = new internshipController();
+
+    std::vector<Internship> listeInternships = dataInternship->getData();
+    for(int i = 0; i<listeInternships.size(); i++){
+        if(listeInternships[i].getIdInternship() == subjectId){
+            QString subject = listeInternships[i].getSubject().c_str();
+            return subject;
+        }
+    }
+
+    delete dataInternship;
+}
+
+void MainWindow::setSubjectData(const QString& subject, int subjectId)
+{
+    dataInternship = new internshipController();
+
+    std::vector<Internship> listeInternships = dataInternship->getData();
+
+    for (int i = 0; i<listeInternships.size(); i++){
+        if(listeInternships[i].getIdInternship() == subjectId){
+            listeInternships[i].setSubject(subject.toStdString());
+        }
+    }
+
+    dataInternship->setData(listeInternships);
+
+    delete dataInternship;
+}
+
+/* GET & SET MDS */
+QString MainWindow::getMDSAllData(int mdsId)
+{
+    dataMDS = new mdsController();
+
+    std::vector<Mds> listeMDS = dataMDS->getData();
+    for(int i = 0; i<listeMDS.size(); i++){
+        if(listeMDS[i].get_id() == mdsId){
+            QString nomMDS = listeMDS[i].get_name().c_str();
+            QString prenomMDS = listeMDS[i].get_firstname().c_str();
+            QString contactMDS = listeMDS[i].get_email().c_str();
+            return nomMDS + "\n" + prenomMDS + "\n" + contactMDS;
+        }
+    }
+
+    delete dataMDS;
+}
+
+QString MainWindow::getMDSName(int mdsId)
+{
+    dataMDS = new mdsController();
+
+    std::vector<Mds> listeMDS = dataMDS->getData();
+    for(int i = 0; i<listeMDS.size(); i++){
+        if(listeMDS[i].get_id() == mdsId){
+            QString nomMDS = listeMDS[i].get_name().c_str();
+            return nomMDS;
+        }
+    }
+
+    delete dataMDS;
+}
+
+QString MainWindow::getMDSSurname(int mdsId)
+{
+    dataMDS = new mdsController();
+
+    std::vector<Mds> listeMDS = dataMDS->getData();
+    for(int i = 0; i<listeMDS.size(); i++){
+        if(listeMDS[i].get_id() == mdsId){
+            QString prenomMDS = listeMDS[i].get_firstname().c_str();
+            return prenomMDS;
+        }
+    }
+
+    delete dataMDS;
+}
+
+QString MainWindow::getMDSContact(int mdsId)
+{
+    dataMDS = new mdsController();
+
+    std::vector<Mds> listeMDS = dataMDS->getData();
+    for(int i = 0; i<listeMDS.size(); i++){
+        if(listeMDS[i].get_id() == mdsId){
+            QString contactMDS = listeMDS[i].get_email().c_str();
+            return contactMDS;
+        }
+    }
+
+    delete dataMDS;
+}
+
+void MainWindow::setMDSData(const QString& mdsName, const QString& mdsSurname, const QString& mdsContact, int mdsId)
+{
+    dataMDS = new mdsController();
+
+    std::vector<Mds> listeMDS = dataMDS->getData();
+
+    for (int i = 0; i<listeMDS.size(); i++){
+        if(listeMDS[i].get_id() == mdsId){
+            listeMDS[i].set_name(mdsName.toStdString());
+            listeMDS[i].set_firstname(mdsSurname.toStdString());
+            listeMDS[i].set_email(mdsContact.toStdString());
+        }
+    }
+
+    dataMDS->setData(listeMDS);
+
+    delete dataMDS;
+}
+
+/* GET & SET Student */
+QString MainWindow::getStudentAllData(int studentId)
+{
+    dataStudent = new studentController();
+
+    std::vector<Student> listeStudent = dataStudent->getData();
+    for(int i = 0; i<listeStudent.size(); i++){
+        if(listeStudent[i].getIdStudent() == studentId){
+            QString nomStudent = listeStudent[i].getNom().c_str();
+            QString prenomStudent = listeStudent[i].getPrenom().c_str();
+            QString mailStudent = listeStudent[i].getMail().c_str();
+            QString promotionStudent = listeStudent[i].getPromotion().c_str();
+            return nomStudent + "\n" + prenomStudent + "\n" + mailStudent + "\n" + promotionStudent;
+        }
+    }
+
+    delete dataStudent;
+}
+
+QString MainWindow::getStudentNom(int studentId)
+{
+    dataStudent = new studentController();
+
+    std::vector<Student> listeStudent = dataStudent->getData();
+    for(int i = 0; i<listeStudent.size(); i++){
+        if(listeStudent[i].getIdStudent() == studentId){
+            QString nomStudent = listeStudent[i].getNom().c_str();
+            return nomStudent;
+        }
+    }
+
+    delete dataStudent;
+}
+
+QString MainWindow::getStudentPrenom(int studentId)
+{
+    dataStudent = new studentController();
+
+    std::vector<Student> listeStudent = dataStudent->getData();
+    for(int i = 0; i<listeStudent.size(); i++){
+        if(listeStudent[i].getIdStudent() == studentId){
+            QString prenomStudent = listeStudent[i].getPrenom().c_str();
+
+            return prenomStudent;
+        }
+    }
+
+    delete dataStudent;
+}
+
+QString MainWindow::getStudentMail(int studentId)
+{
+    dataStudent = new studentController();
+
+    std::vector<Student> listeStudent = dataStudent->getData();
+    for(int i = 0; i<listeStudent.size(); i++){
+        if(listeStudent[i].getIdStudent() == studentId){
+            QString mailStudent = listeStudent[i].getMail().c_str();
+            return mailStudent;
+        }
+    }
+
+    delete dataStudent;
+}
+
+QString MainWindow::getStudentPromotion(int studentId)
+{
+    dataStudent = new studentController();
+
+    std::vector<Student> listeStudent = dataStudent->getData();
+    for(int i = 0; i<listeStudent.size(); i++){
+        if(listeStudent[i].getIdStudent() == studentId){
+            QString promotionStudent = listeStudent[i].getPromotion().c_str();
+            return promotionStudent;
+        }
+    }
+
+    delete dataStudent;
+}
+
+void MainWindow::setStudentData(const QString& studentName, const QString& studentSurname, const QString& studentMail, const QString& studentPromotion, int studentId)
+{
+    dataStudent = new studentController();
+
+    std::vector<Student> listeStudent = dataStudent->getData();
+
+    for (int i = 0; i<listeStudent.size(); i++){
+        if(listeStudent[i].getIdStudent() == studentId){
+            listeStudent[i].setNom(studentName.toStdString());
+            listeStudent[i].setPrenom(studentSurname.toStdString());
+            listeStudent[i].setMail(studentMail.toStdString());
+            listeStudent[i].setPromotion(studentPromotion.toStdString());
+        }
+    }
+
+    dataStudent->setData(listeStudent);
+
+    delete dataStudent;
+}
 
 MainWindow::~MainWindow()
 {
