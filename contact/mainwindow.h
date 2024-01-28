@@ -126,6 +126,10 @@ private:
     QDialog *popupContact;
 
     Type type;
+
+    int idCompany;
+    int idMDS;
+    int idStudent;
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
@@ -139,6 +143,12 @@ private:
     QString getCompanyAllData(int companyId);
     QString getCompanyName(int companyId);
     QString getCompanyDomain(int companyId);
+    int getCompanyId();
+    void setCompanyId(int companyId);
+    int getMdsId();
+    void setMdsId(int mdsId);
+    int getStudentId();
+    void setStudentId(int studentId);
     void setCompanyData(const QString& nom, const QString& domaine, int companyId);
 
     // GET & SET Subject
